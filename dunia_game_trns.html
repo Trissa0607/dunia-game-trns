@@ -1273,7 +1273,7 @@
     let timerId = null;
     let loopId = null;
     let audioCtx = null;
-    let playerName = localStorage.getItem("ceriaPlayerName") || "";
+    let playerName = "";
     const DEFAULT_MAX_LEVEL = 5;
 
     // Batas level dibuat berbeda-beda.
@@ -1595,7 +1595,6 @@
       }
 
       playerName = name;
-      localStorage.setItem("ceriaPlayerName", playerName);
       updatePlayerNameDisplay();
 
       loginScreen.classList.remove("active");
@@ -1610,7 +1609,7 @@
       gameScreen.classList.remove("active");
       menu.classList.remove("active");
       loginScreen.classList.add("active");
-      playerNameInput.value = playerName || "";
+      playerNameInput.value = "";
       setTimeout(()=>playerNameInput.focus(), 100);
 
       if(changeName){
@@ -1619,16 +1618,14 @@
     }
 
     function initLogin(){
+      playerName = "";
+      playerNameInput.value = "";
       updatePlayerNameDisplay();
 
-      if(playerName){
-        loginScreen.classList.remove("active");
-        menu.classList.add("active");
-      }else{
-        loginScreen.classList.add("active");
-        menu.classList.remove("active");
-        setTimeout(()=>playerNameInput.focus(), 100);
-      }
+      loginScreen.classList.add("active");
+      menu.classList.remove("active");
+      gameScreen.classList.remove("active");
+      setTimeout(()=>playerNameInput.focus(), 100);
 
       playerNameInput.addEventListener("keydown", function(e){
         if(e.key === "Enter") savePlayerName();
