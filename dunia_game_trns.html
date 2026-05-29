@@ -1563,6 +1563,15 @@
       }catch(e){}
     }
 
+    function speakInstructionOnce(text){
+      // Suara instruksi otomatis hanya dibacakan sekali di awal game.
+      // Tombol dengarkan/bacakan tetap bisa dipakai kapan saja.
+      if(!state) return;
+      if(state.instructionSpoken) return;
+      state.instructionSpoken = true;
+      speakText(text);
+    }
+
     function cleanPlayerName(name){
       return (name || "").trim().replace(/[^\p{L}\p{N}\s.'-]/gu, "").slice(0, 18);
     }
@@ -4093,7 +4102,7 @@
         rec.start();
       };
 
-      listenAgain.onclick = ()=>speakText("Semangat menjawab, " + getPlayerName() + ". " + target.say);
+      listenAgain.onclick = ()=>speakInstructionOnce("Semangat menjawab, " + getPlayerName() + ". " + target.say);
 
       submit.onclick = ()=>{
         if(input.value.trim()) checkAnswer(input.value.trim());
@@ -5254,7 +5263,7 @@
       box.appendChild(itemBox);
       box.appendChild(options);
 
-      speakText("Hitung total belanja ini, " + getPlayerName());
+      speakInstructionOnce("Hitung total belanja ini, " + getPlayerName());
       updateHud();
     }
 
@@ -5365,7 +5374,7 @@
       box.appendChild(options);
 
       if(!state.instructionSpoken){
-        speakText("Lanjutkan pola ini, " + getPlayerName());
+        speakInstructionOnce("Lanjutkan pola ini, " + getPlayerName());
         state.instructionSpoken = true;
       }
 
@@ -5471,7 +5480,7 @@
       box.appendChild(options);
 
       if(!state.instructionSpoken){
-        speakText("Kelompokkan benda ini, " + getPlayerName());
+        speakInstructionOnce("Kelompokkan benda ini, " + getPlayerName());
         state.instructionSpoken = true;
       }
 
