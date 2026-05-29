@@ -1,0 +1,5654 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dunia Game TRNS</title>
+  <meta name="title" content="Dunia Game TRNS" />
+  <style>
+    :root{
+      --ink:#243447;
+      --white:#fff;
+      --soft:#ffffffbf;
+      --blue:#4D96FF;
+      --red:#FF4D6D;
+      --yellow:#FFD93D;
+      --green:#6BCB77;
+      --purple:#B983FF;
+      --orange:#FF9F1C;
+      --pink:#FFB3C7;
+      --shadow:0 18px 35px rgba(31,45,54,.18);
+      --radius:28px;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Comic Sans MS","Trebuchet MS",Arial,sans-serif;
+      color:var(--ink);
+      overflow-x:hidden;
+      background:
+        radial-gradient(circle at 12% 15%,rgba(255,255,255,.85) 0 5%,transparent 6%),
+        radial-gradient(circle at 84% 18%,rgba(255,255,255,.6) 0 4%,transparent 5%),
+        radial-gradient(circle at 75% 86%,rgba(255,255,255,.5) 0 7%,transparent 8%),
+        linear-gradient(135deg,#85E7FF,#FFD1F7 55%,#FFF1A8);
+    }
+
+    .bubble{
+      position:fixed;
+      border-radius:50%;
+      background:rgba(255,255,255,.35);
+      pointer-events:none;
+      animation:float 8s infinite ease-in-out;
+      z-index:0;
+    }
+    .b1{width:120px;height:120px;left:5%;top:70%;animation-delay:0s}
+    .b2{width:80px;height:80px;left:86%;top:20%;animation-delay:1s}
+    .b3{width:160px;height:160px;left:68%;top:73%;animation-delay:2s}
+    .b4{width:60px;height:60px;left:22%;top:12%;animation-delay:3s}
+
+    @keyframes float{
+      0%,100%{transform:translateY(0) scale(1)}
+      50%{transform:translateY(-35px) scale(1.05)}
+    }
+
+    .app{
+      width:min(1160px,94vw);
+      margin:auto;
+      padding:24px 0 36px;
+      position:relative;
+      z-index:1;
+    }
+
+    header{
+      background:var(--soft);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px 22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:15px;
+      margin-bottom:22px;
+      backdrop-filter:blur(10px);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .logo{
+      width:64px;
+      height:64px;
+      border-radius:22px;
+      display:grid;
+      place-items:center;
+      font-size:34px;
+      background:linear-gradient(135deg,var(--red),var(--yellow),var(--green),var(--blue));
+      box-shadow:0 12px 20px rgba(31,45,54,.18);
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(27px,4vw,44px);
+      line-height:1;
+    }
+
+    .subtitle{
+      margin:5px 0 0;
+      font-weight:900;
+      opacity:.72;
+      font-size:14px;
+    }
+
+    .stats{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      background:#fff;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:900;
+      box-shadow:0 10px 18px rgba(31,45,54,.1);
+      white-space:nowrap;
+    }
+
+    .name-pill{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .tiny-btn{
+      border:0;
+      cursor:pointer;
+      border-radius:999px;
+      padding:6px 10px;
+      font-family:inherit;
+      font-weight:1000;
+      background:#FFD93D;
+      color:#4b3710;
+      box-shadow:0 5px 0 rgba(0,0,0,.08);
+    }
+
+    .login-card{
+      min-height:610px;
+      display:grid;
+      place-items:center;
+      text-align:center;
+    }
+
+    .login-box{
+      width:min(760px,92vw);
+      padding:34px 26px;
+      border-radius:36px;
+      background:linear-gradient(135deg,#fff,#fff6c8);
+      box-shadow:inset 0 0 0 5px rgba(255,255,255,.7), var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .login-box::before{
+      content:"✨";
+      position:absolute;
+      left:24px;
+      top:20px;
+      font-size:48px;
+      animation:wiggle 1.6s infinite ease-in-out;
+    }
+
+    .login-box::after{
+      content:"🎮";
+      position:absolute;
+      right:24px;
+      bottom:20px;
+      font-size:54px;
+      animation:wiggle 1.8s infinite ease-in-out reverse;
+    }
+
+    .login-emoji{
+      font-size:clamp(72px,13vw,130px);
+      margin-bottom:8px;
+      filter:drop-shadow(0 8px 0 rgba(0,0,0,.08));
+    }
+
+    .login-box h2{
+      margin:0 0 8px;
+      font-size:clamp(32px,6vw,58px);
+      line-height:1;
+    }
+
+    .login-box p{
+      margin:0 auto 20px;
+      max-width:620px;
+      font-size:18px;
+      font-weight:900;
+      line-height:1.4;
+      opacity:.78;
+    }
+
+    .name-input{
+      width:min(460px,90%);
+      border:5px solid #4D96FF;
+      border-radius:22px;
+      padding:15px 18px;
+      font-family:inherit;
+      font-size:22px;
+      font-weight:1000;
+      text-align:center;
+      color:#243447;
+      outline:none;
+      background:#fff;
+      box-shadow:0 10px 18px rgba(31,45,54,.1);
+      margin-bottom:14px;
+    }
+
+    .name-input:focus{
+      border-color:#FF9F1C;
+      box-shadow:0 0 0 6px rgba(255,159,28,.18), 0 10px 18px rgba(31,45,54,.1);
+    }
+
+    .login-note{
+      margin-top:14px;
+      font-size:14px;
+      font-weight:900;
+      opacity:.68;
+    }
+
+    .screen{
+      display:none;
+      background:var(--soft);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+      min-height:650px;
+      backdrop-filter:blur(8px);
+    }
+
+    .screen.active{
+      display:block;
+      animation:pop .25s ease;
+    }
+
+    @keyframes pop{
+      from{opacity:0;transform:scale(.98) translateY(8px)}
+      to{opacity:1;transform:scale(1) translateY(0)}
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:18px;
+      margin-bottom:20px;
+    }
+
+    .hero-card{
+      background:linear-gradient(135deg,#fff,#fff6c8);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:inset 0 0 0 4px rgba(255,255,255,.65);
+    }
+
+    .hero-card h2{
+      font-size:clamp(32px,5vw,56px);
+      margin:0 0 10px;
+      line-height:1;
+    }
+
+    .hero-card p{
+      margin:0;
+      font-weight:900;
+      line-height:1.45;
+      font-size:18px;
+    }
+
+    .mascot{
+      min-height:235px;
+      border-radius:var(--radius);
+      background:linear-gradient(135deg,#DFF6FF,#FFD6E8);
+      display:grid;
+      place-items:center;
+      font-size:125px;
+      box-shadow:inset 0 0 0 4px rgba(255,255,255,.65);
+      animation:wiggle 1.8s infinite ease-in-out;
+    }
+
+    @keyframes wiggle{
+      0%,100%{transform:rotate(-2deg)}
+      50%{transform:rotate(2deg) scale(1.03)}
+    }
+
+    .quick-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin:0 0 18px;
+    }
+
+    .quick{
+      border:0;
+      cursor:pointer;
+      border-radius:999px;
+      padding:12px 17px;
+      background:#fff;
+      color:var(--ink);
+      font-size:15px;
+      box-shadow:0 12px 20px rgba(31,45,54,.12);
+      transition:.14s;
+    }
+    .quick:hover{transform:translateY(-4px)}
+
+    .game-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .game-card{
+      border:0;
+      min-height:230px;
+      padding:18px;
+      border-radius:26px;
+      text-align:left;
+      cursor:pointer;
+      color:var(--ink);
+      box-shadow:0 14px 24px rgba(31,45,54,.14);
+      transition:.16s ease;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .game-card:hover{
+      transform:translateY(-8px) rotate(-1deg);
+      box-shadow:0 22px 34px rgba(31,45,54,.2);
+    }
+
+    .game-card::after{
+      content:"";
+      position:absolute;
+      width:130px;
+      height:130px;
+      border-radius:50%;
+      right:-35px;
+      bottom:-45px;
+      background:rgba(255,255,255,.28);
+    }
+
+    .game-icon{
+      font-size:58px;
+      margin-bottom:12px;
+      filter:drop-shadow(0 7px 0 rgba(0,0,0,.08));
+    }
+
+    .game-card h3{
+      margin:0 0 8px;
+      font-size:23px;
+    }
+
+    .game-card p{
+      margin:0;
+      font-weight:900;
+      line-height:1.35;
+      font-size:14px;
+    }
+
+    .tag{
+      position:absolute;
+      top:14px;
+      right:14px;
+      z-index:2;
+      background:#fff;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:1000;
+      box-shadow:0 8px 14px rgba(31,45,54,.12);
+    }
+
+    .g1{background:linear-gradient(135deg,#fff,#FFE066)}
+    .g2{background:linear-gradient(135deg,#fff,#A3D5FF)}
+    .g3{background:linear-gradient(135deg,#fff,#CAFFBF)}
+    .g4{background:linear-gradient(135deg,#fff,#FFC6FF)}
+    .g5{background:linear-gradient(135deg,#fff,#FFD6A5)}
+    .g6{background:linear-gradient(135deg,#fff,#BDE0FE)}
+    .g7{background:linear-gradient(135deg,#fff,#D0F4DE)}
+    .g8{background:linear-gradient(135deg,#fff,#FAD2E1)}
+    .g9{background:linear-gradient(135deg,#fff,#E4C1F9)}
+
+    .game-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+
+    .title-area h2{
+      margin:0;
+      font-size:clamp(26px,4vw,38px);
+    }
+
+    .title-area p{
+      margin:4px 0 0;
+      font-weight:900;
+      opacity:.72;
+    }
+
+    .btn-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    button{
+      font-family:inherit;
+      font-weight:900;
+    }
+
+    .btn{
+      border:0;
+      cursor:pointer;
+      padding:12px 18px;
+      border-radius:999px;
+      font-size:15px;
+      color:#fff;
+      background:var(--blue);
+      box-shadow:0 10px 0 rgba(0,0,0,.08),0 14px 20px rgba(31,45,54,.12);
+      transition:.12s;
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+    .btn:active{transform:translateY(3px);box-shadow:0 5px 0 rgba(0,0,0,.08)}
+    .btn.red{background:var(--red)}
+    .btn.green{background:var(--green)}
+    .btn.yellow{background:var(--yellow);color:#4b3710}
+
+    .hud{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .hud .box{
+      background:#fff;
+      border-radius:22px;
+      padding:12px;
+      text-align:center;
+      font-weight:900;
+      box-shadow:0 8px 16px rgba(31,45,54,.08);
+    }
+
+    .hud .big{
+      display:block;
+      font-size:22px;
+      margin-top:3px;
+    }
+
+    .progress-wrap{
+      height:25px;
+      background:#fff;
+      border-radius:999px;
+      padding:4px;
+      margin-bottom:14px;
+      box-shadow:inset 0 0 0 3px rgba(36,52,71,.06);
+    }
+
+    .progress{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--green),var(--yellow),var(--red));
+      transition:.25s ease;
+    }
+
+    .message{
+      text-align:center;
+      font-size:clamp(19px,3vw,28px);
+      font-weight:1000;
+      min-height:42px;
+      margin-top:10px;
+    }
+
+    canvas{
+      width:100%;
+      max-width:100%;
+      display:block;
+      border-radius:28px;
+      background:linear-gradient(#BDEFFF,#FFF6C8);
+      box-shadow:inset 0 0 0 4px rgba(255,255,255,.6);
+      touch-action:none;
+    }
+
+    .play-area{
+      min-height:430px;
+      position:relative;
+      border-radius:28px;
+      background:linear-gradient(180deg,#BDEFFF,#FFF6C8);
+      overflow:hidden;
+      box-shadow:inset 0 0 0 4px rgba(255,255,255,.6);
+      padding:24px;
+    }
+
+    .center-game{
+      min-height:430px;
+      border-radius:28px;
+      background:linear-gradient(135deg,#fff,#E7F7FF);
+      padding:24px;
+      text-align:center;
+      box-shadow:inset 0 0 0 4px rgba(255,255,255,.6);
+    }
+
+    .big-question{
+      font-size:clamp(42px,8vw,82px);
+      font-weight:1000;
+      margin:18px 0;
+      text-shadow:0 8px 0 rgba(0,0,0,.07);
+    }
+
+    .small-clue{
+      font-size:clamp(20px,3vw,30px);
+      font-weight:1000;
+      margin:8px auto 16px;
+      max-width:760px;
+      line-height:1.35;
+    }
+
+    .option-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      max-width:760px;
+      margin:22px auto 0;
+    }
+
+    .option-btn{
+      min-height:100px;
+      border:0;
+      border-radius:28px;
+      cursor:pointer;
+      font-size:24px;
+      color:var(--ink);
+      background:#fff;
+      box-shadow:0 12px 0 rgba(0,0,0,.08),0 14px 20px rgba(31,45,54,.12);
+      transition:.12s;
+      padding:12px;
+    }
+
+    .option-btn:hover{transform:translateY(-4px) rotate(-1deg)}
+    .option-btn:active{transform:translateY(4px);box-shadow:0 6px 0 rgba(0,0,0,.08)}
+    .option-btn.color{color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.2)}
+
+    .balloon{
+      position:absolute;
+      width:82px;
+      height:98px;
+      border-radius:50% 50% 45% 45%;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      font-size:30px;
+      box-shadow:inset -12px -14px 0 rgba(0,0,0,.1),0 12px 20px rgba(0,0,0,.12);
+      animation:bob .8s infinite ease-in-out alternate;
+      user-select:none;
+    }
+
+    .balloon::after{
+      content:"";
+      position:absolute;
+      width:4px;
+      height:45px;
+      background:rgba(36,52,71,.45);
+      top:92px;
+      left:50%;
+    }
+
+    @keyframes bob{
+      from{transform:translateY(0)}
+      to{transform:translateY(-10px)}
+    }
+
+    .pop{animation:explode .23s forwards ease-out}
+    @keyframes explode{to{transform:scale(1.8);opacity:0}}
+
+    .memory-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      max-width:720px;
+      margin:0 auto;
+    }
+
+    .mem-card{
+      aspect-ratio:1/1;
+      border:0;
+      border-radius:24px;
+      background:linear-gradient(135deg,var(--blue),var(--purple));
+      box-shadow:0 10px 18px rgba(31,45,54,.14);
+      cursor:pointer;
+      font-size:52px;
+      display:grid;
+      place-items:center;
+      transition:.16s;
+      color:transparent;
+      user-select:none;
+    }
+
+    .mem-card:hover{transform:translateY(-4px)}
+    .mem-card.open,.mem-card.done{
+      color:initial;
+      background:#fff;
+      transform:rotateY(180deg);
+    }
+
+    .mem-card.done{
+      background:#E9FFD9;
+      cursor:default;
+      box-shadow:0 8px 14px rgba(54,194,117,.2);
+    }
+
+    .letter-row,.answer-row{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .letter{
+      width:66px;
+      height:66px;
+      border:0;
+      border-radius:20px;
+      background:linear-gradient(135deg,#fff,#FFE066);
+      box-shadow:0 10px 0 rgba(0,0,0,.08),0 13px 18px rgba(31,45,54,.12);
+      cursor:pointer;
+      font-size:30px;
+      color:var(--ink);
+    }
+
+    .slot{
+      min-width:62px;
+      height:62px;
+      border-radius:18px;
+      background:#fff;
+      display:grid;
+      place-items:center;
+      font-size:30px;
+      font-weight:1000;
+      box-shadow:inset 0 0 0 4px rgba(36,52,71,.08);
+    }
+
+    .shape-btn{
+      position:absolute;
+      border:0;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      font-size:28px;
+      transition:.12s;
+      box-shadow:0 10px 18px rgba(31,45,54,.15);
+    }
+    .shape-btn:hover{transform:scale(1.08)}
+    .circle{border-radius:50%}
+    .square{border-radius:18px}
+    .triangle{
+      width:0 !important;
+      height:0 !important;
+      background:transparent !important;
+      box-shadow:none;
+      border-left:34px solid transparent !important;
+      border-right:34px solid transparent !important;
+      border-bottom:66px solid var(--shapeColor) !important;
+      border-radius:0;
+    }
+
+    .shake{animation:shake .22s}
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      25%{transform:translateX(-3px)}
+      75%{transform:translateX(3px)}
+    }
+
+    .confetti{
+      position:fixed;
+      width:10px;
+      height:16px;
+      top:-30px;
+      z-index:5;
+      animation:fall 1.6s linear forwards;
+      pointer-events:none;
+    }
+
+    @keyframes fall{
+      to{transform:translateY(110vh) rotate(560deg)}
+    }
+
+
+    .feedback-burst{
+      position:fixed;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%) scale(.6);
+      z-index:20;
+      min-width:260px;
+      max-width:86vw;
+      padding:22px 28px;
+      border-radius:32px;
+      text-align:center;
+      font-size:clamp(26px,5vw,52px);
+      font-weight:1000;
+      color:#243447;
+      background:#ffffffee;
+      box-shadow:0 24px 60px rgba(31,45,54,.25);
+      pointer-events:none;
+      opacity:0;
+      animation:burstPop .9s ease forwards;
+    }
+
+    .feedback-burst .mini{
+      display:block;
+      font-size:clamp(15px,2.5vw,22px);
+      margin-top:8px;
+      opacity:.82;
+    }
+
+    .feedback-correct{
+      background:linear-gradient(135deg,#fff,#d9ffd8);
+      border:6px solid #6BCB77;
+    }
+
+    .feedback-wrong{
+      background:linear-gradient(135deg,#fff,#ffeef3);
+      border:4px solid #FFB3C7;
+      animation:softWrong .95s ease forwards;
+    }
+
+    .feedback-level{
+      background:linear-gradient(135deg,#fff,#fff1a8);
+      border:6px solid #FFD93D;
+    }
+
+    .feedback-over{
+      background:linear-gradient(135deg,#fff,#dff6ff);
+      border:6px solid #4D96FF;
+      animation:gameOverPop 1.25s ease forwards;
+    }
+
+    @keyframes burstPop{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.4) rotate(-8deg)}
+      18%{opacity:1;transform:translate(-50%,-50%) scale(1.1) rotate(3deg)}
+      70%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}
+      100%{opacity:0;transform:translate(-50%,-55%) scale(.92)}
+    }
+
+    @keyframes softWrong{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.88)}
+      18%{opacity:1;transform:translate(-50%,-50%) scale(1.02)}
+      72%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+      100%{opacity:0;transform:translate(-50%,-53%) scale(.96)}
+    }
+
+    @keyframes gameOverPop{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.45) rotate(-3deg)}
+      20%{opacity:1;transform:translate(-50%,-50%) scale(1.06) rotate(2deg)}
+      80%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+      100%{opacity:0;transform:translate(-50%,-52%) scale(.96)}
+    }
+
+    .score-pop{
+      position:fixed;
+      z-index:19;
+      pointer-events:none;
+      font-size:34px;
+      font-weight:1000;
+      color:#FF9F1C;
+      text-shadow:0 4px 0 rgba(255,255,255,.75);
+      animation:scoreFly .9s ease forwards;
+    }
+
+    @keyframes scoreFly{
+      0%{opacity:0;transform:translateY(0) scale(.6)}
+      15%{opacity:1;transform:translateY(-8px) scale(1.15)}
+      100%{opacity:0;transform:translateY(-80px) scale(.9)}
+    }
+
+    .screen.flash-good{
+      animation:flashGood .35s ease;
+    }
+
+    .screen.flash-bad{
+      animation:flashBad .35s ease;
+    }
+
+    @keyframes flashGood{
+      0%,100%{box-shadow:var(--shadow)}
+      50%{box-shadow:var(--shadow)}
+    }
+
+    @keyframes flashBad{
+      0%,100%{box-shadow:var(--shadow)}
+      50%{box-shadow:var(--shadow)}
+    }
+
+    .voice-panel{
+      max-width:780px;
+      margin:18px auto 0;
+      padding:18px;
+      border-radius:28px;
+      background:#fff;
+      box-shadow:inset 0 0 0 4px rgba(36,52,71,.06);
+    }
+
+    .voice-output{
+      min-height:52px;
+      padding:14px 18px;
+      border-radius:20px;
+      background:#F2F8FF;
+      font-size:20px;
+      font-weight:1000;
+      margin-top:12px;
+    }
+
+    .end-card{
+      max-width:780px;
+      margin:26px auto;
+      padding:30px 24px;
+      border-radius:34px;
+      background:linear-gradient(135deg,#fff,#eef8ff);
+      box-shadow:inset 0 0 0 5px rgba(255,255,255,.82), 0 16px 28px rgba(31,45,54,.14);
+      text-align:center;
+      font-weight:1000;
+    }
+
+    .end-card.win{
+      background:linear-gradient(135deg,#fff,#d9ffd8);
+    }
+
+    .end-card.over{
+      background:linear-gradient(135deg,#fff,#fff0f5);
+    }
+
+    .end-card .emoji{
+      display:block;
+      font-size:clamp(48px,8vw,90px);
+      margin-bottom:6px;
+    }
+
+    .end-card h3{
+      margin:0;
+      font-size:clamp(28px,5vw,52px);
+    }
+
+    .end-card p{
+      margin:10px auto 18px;
+      max-width:620px;
+      font-size:18px;
+      line-height:1.35;
+    }
+
+    .end-card .btn-row{
+      justify-content:center;
+    }
+
+    .mic-btn{
+      border:0;
+      border-radius:999px;
+      cursor:pointer;
+      background:linear-gradient(135deg,#FF4D6D,#FF9F1C);
+      color:#fff;
+      font-size:22px;
+      padding:16px 22px;
+      box-shadow:0 12px 0 rgba(0,0,0,.1),0 14px 22px rgba(31,45,54,.14);
+    }
+
+    .mic-btn.listening{
+      animation:pulseMic .8s infinite ease-in-out;
+    }
+
+    @keyframes pulseMic{
+      0%,100%{transform:scale(1);filter:brightness(1)}
+      50%{transform:scale(1.08);filter:brightness(1.15)}
+    }
+
+    .typing-input{
+      width:min(440px,90%);
+      border:4px solid #4D96FF;
+      border-radius:18px;
+      padding:13px 16px;
+      font-family:inherit;
+      font-weight:900;
+      font-size:18px;
+      outline:none;
+      margin-top:12px;
+      text-align:center;
+    }
+
+    .mission-banner{
+      max-width:840px;
+      margin:0 auto 18px;
+      padding:16px 20px;
+      border-radius:24px;
+      background:linear-gradient(135deg,#fff,#fff1a8);
+      box-shadow:0 10px 18px rgba(31,45,54,.1);
+      font-weight:1000;
+      text-align:center;
+      font-size:clamp(18px,3vw,26px);
+    }
+
+    .mission-sub{
+      display:block;
+      font-size:15px;
+      opacity:.78;
+      margin-top:6px;
+      line-height:1.35;
+    }
+
+    .mission-complete-card{
+      max-width:820px;
+      margin:24px auto;
+      padding:30px 24px;
+      border-radius:32px;
+      background:linear-gradient(135deg,#fff,#d9ffd8);
+      box-shadow:inset 0 0 0 5px rgba(255,255,255,.8), 0 14px 24px rgba(31,45,54,.12);
+      text-align:center;
+      font-weight:1000;
+    }
+
+    .mission-complete-card .big{
+      font-size:clamp(42px,8vw,82px);
+      display:block;
+      margin-bottom:8px;
+    }
+
+
+    .footer-note{
+      text-align:center;
+      margin-top:18px;
+      font-weight:900;
+      opacity:.75;
+    }
+
+    @media(max-width:920px){
+      header{align-items:flex-start;flex-direction:column}
+      .stats{justify-content:flex-start}
+      .hero{grid-template-columns:1fr}
+      .game-grid{grid-template-columns:repeat(2,1fr)}
+      .hud{grid-template-columns:repeat(2,1fr)}
+      .option-grid{grid-template-columns:repeat(2,1fr)}
+      .memory-grid{gap:10px}
+      .mem-card{font-size:40px;border-radius:18px}
+      .screen{min-height:auto}
+    }
+
+    @media(max-width:560px){
+      .game-grid{grid-template-columns:1fr}
+      .hud{grid-template-columns:1fr 1fr}
+      .option-grid{grid-template-columns:1fr}
+      .letter{width:55px;height:55px;font-size:25px}
+      .slot{min-width:52px;height:52px;font-size:24px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bubble b1"></div>
+  <div class="bubble b2"></div>
+  <div class="bubble b3"></div>
+  <div class="bubble b4"></div>
+
+  <main class="app">
+    <header>
+      <div class="brand">
+        <div class="logo">🎮</div>
+        <div>
+          <h1>Dunia Game Ceria Plus</h1>
+          <p class="subtitle">Banyak pilihan game seru, edukatif, berlevel, dan tidak membosankan.</p>
+          <p class="subtitle">by : Trissa Nurul Suci</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="pill name-pill">👧 Nama: <span id="playerNameDisplay">-</span> <button class="tiny-btn" onclick="showLogin(true)">Ganti</button></div>
+        <div class="pill">🏆 Skor Total: <span id="totalScore">0</span></div>
+        <div class="pill">⭐ Rekor Terbaik: <span id="bestScore">0</span></div>
+      </div>
+    </header>
+
+    <section id="loginScreen" class="screen active">
+      <div class="login-card">
+        <div class="login-box">
+          <div class="login-emoji">🦊🎮</div>
+          <h2>Masukkan Nama</h2>
+
+          <input id="playerNameInput" class="name-input" type="text" maxlength="18" placeholder="Tulis nama kamu..." autocomplete="off" />
+
+          <div class="btn-row" style="justify-content:center">
+            <button class="btn green" onclick="savePlayerName()">🚀 Mulai Bermain</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="screen">
+
+      <div class="hero">
+        <div class="hero-card">
+          <h2>Selamat Bermain! 🌈</h2>
+          <p>
+            Pilih game yang kamu suka. Ada game aksi, edukasi, menghitung, tebak-tebakan,
+            susun kata, cari bentuk, dan kuis pengetahuan. Setiap game punya level,
+            skor, nyawa, target, dan rekor terbaik.
+          </p>
+        </div>
+        <div class="mascot">🦊</div>
+      </div>
+
+      <div class="quick-row">
+        <button class="quick" onclick="openRandomGame()">🎲 Main Game Acak</button>
+        <button class="quick" onclick="resetRecord()">🧹 Reset Skor</button>
+      </div>
+
+      <div class="game-grid">
+        <button class="game-card g9" onclick="openGame('mission')">
+          <span class="tag">Misi Baru</span>
+          <div class="game-icon">🗺️</div>
+          <h3>Petualangan Misi Berbeda</h3>
+          <p>Selesaikan misi satu per satu. Setiap misi punya tantangan yang berbeda.</p>
+        </button>
+
+        <button class="game-card g6" onclick="openGame('money')">
+          <span class="tag">Uang</span>
+          <div class="game-icon">🛒</div>
+          <h3>Belanja Pintar</h3>
+          <p>Hitung total harga barang dan pilih jumlah uang yang benar.</p>
+        </button>
+
+        <button class="game-card g7" onclick="openGame('pattern')">
+          <span class="tag">Pola</span>
+          <div class="game-icon">🧩</div>
+          <h3>Lanjutkan Pola</h3>
+          <p>Lihat urutan gambar, lalu pilih gambar yang hilang.</p>
+        </button>
+
+        <button class="game-card g8" onclick="openGame('category')">
+          <span class="tag">Kategori</span>
+          <div class="game-icon">🧺</div>
+          <h3>Kelompokkan Benda</h3>
+          <p>Pilih kategori yang tepat untuk benda yang muncul.</p>
+        </button>
+
+        <button class="game-card g9" onclick="openGame('story')">
+          <span class="tag">Membaca</span>
+          <div class="game-icon">📚</div>
+          <h3>Cerita Mini</h3>
+          <p>Baca cerita pendek, lalu jawab pertanyaan pemahaman.</p>
+        </button>
+
+        <button class="game-card g1" onclick="openGame('star')">
+          <span class="tag">Aksi</span>
+          <div class="game-icon">⭐</div>
+          <h3>Tangkap Bintang</h3>
+          <p>Gerakkan keranjang, tangkap bintang, ambil hati, dan hindari bom.</p>
+        </button>
+
+        <button class="game-card g2" onclick="openGame('balloon')">
+          <span class="tag">Cepat</span>
+          <div class="game-icon">🎈</div>
+          <h3>Pecah Balon</h3>
+          <p>Klik balon warna-warni, tetapi jangan tekan balon bom.</p>
+        </button>
+
+        <button class="game-card g3" onclick="openGame('memory')">
+          <span class="tag">Memori</span>
+          <div class="game-icon">🍓</div>
+          <h3>Memory Buah</h3>
+          <p>Cari pasangan kartu yang sama untuk naik level.</p>
+        </button>
+
+        <button class="game-card g4" onclick="openGame('color')">
+          <span class="tag">Warna</span>
+          <div class="game-icon">🌈</div>
+          <h3>Tebak Warna</h3>
+          <p>Klik warna yang benar sesuai perintah di layar.</p>
+        </button>
+
+        <button class="game-card g5" onclick="openGame('math')">
+          <span class="tag">Edukasi</span>
+          <div class="game-icon">➕</div>
+          <h3>Hitung Cepat</h3>
+          <p>Jawab soal tambah, kurang, dan kali sederhana. Makin tinggi makin seru.</p>
+        </button>
+
+        <button class="game-card g6" onclick="openGame('animal')">
+          <span class="tag">Tebakan</span>
+          <div class="game-icon">🦁</div>
+          <h3>Tebak Hewan</h3>
+          <p>Baca petunjuk lucu, lalu pilih hewan yang benar.</p>
+        </button>
+
+        <button class="game-card g7" onclick="openGame('word')">
+          <span class="tag">Bahasa</span>
+          <div class="game-icon">🔤</div>
+          <h3>Susun Kata</h3>
+          <p>Susun huruf acak menjadi kata yang benar sesuai gambar.</p>
+        </button>
+
+        <button class="game-card g8" onclick="openGame('shape')">
+          <span class="tag">Fokus</span>
+          <div class="game-icon">🔷</div>
+          <h3>Cari Bentuk</h3>
+          <p>Cari bentuk yang diminta. Jangan salah klik ya!</p>
+        </button>
+
+        <button class="game-card g9" onclick="openGame('quiz')">
+          <span class="tag">Kuis</span>
+          <div class="game-icon">🧠</div>
+          <h3>Kuis Pintar</h3>
+          <p>Jawab tebak-tebakan edukasi sederhana yang seru.</p>
+        </button>
+
+        <button class="game-card g1" onclick="openGame('count')">
+          <span class="tag">Hitung</span>
+          <div class="game-icon">🍎</div>
+          <h3>Hitung Gambar</h3>
+          <p>Hitung jumlah gambar yang muncul, lalu pilih angka yang benar.</p>
+        </button>
+
+        <button class="game-card g2" onclick="openGame('english')">
+          <span class="tag">English</span>
+          <div class="game-icon">🇬🇧</div>
+          <h3>Belajar English</h3>
+          <p>Cocokkan kata bahasa Indonesia dengan bahasa Inggrisnya.</p>
+        </button>
+
+        <button class="game-card g3" onclick="openGame('order')">
+          <span class="tag">Logika</span>
+          <div class="game-icon">🔢</div>
+          <h3>Urutkan Angka</h3>
+          <p>Klik angka dari yang paling kecil sampai paling besar.</p>
+        </button>
+
+        <button class="game-card g4" onclick="openGame('mole')">
+          <span class="tag">Refleks</span>
+          <div class="game-icon">🐹</div>
+          <h3>Tangkap Tikus</h3>
+          <p>Klik tikus yang muncul. Kalau klik lubang kosong, MISS dan nyawa berkurang.</p>
+        </button>
+
+        <button class="game-card g5" onclick="openGame('simon')">
+          <span class="tag">Memori</span>
+          <div class="game-icon">🎵</div>
+          <h3>Ikuti Pola</h3>
+          <p>Ingat urutan warna, lalu klik kembali dengan urutan yang sama.</p>
+        </button>
+
+        <button class="game-card g6" onclick="openGame('odd')">
+          <span class="tag">Teliti</span>
+          <div class="game-icon">👀</div>
+          <h3>Cari yang Beda</h3>
+          <p>Temukan satu gambar yang berbeda di antara banyak gambar yang sama.</p>
+        </button>
+
+        <button class="game-card g7" onclick="openGame('trash')">
+          <span class="tag">Lingkungan</span>
+          <div class="game-icon">♻️</div>
+          <h3>Pilah Sampah</h3>
+          <p>Masukkan sampah ke tempat yang benar: organik, plastik, kertas, atau logam.</p>
+        </button>
+
+        <button class="game-card g8" onclick="openGame('job')">
+          <span class="tag">Profesi</span>
+          <div class="game-icon">👩‍🏫</div>
+          <h3>Tebak Profesi</h3>
+          <p>Baca petunjuk pekerjaan, lalu pilih profesi yang tepat.</p>
+        </button>
+
+        <button class="game-card g9" onclick="openGame('maze')">
+          <span class="tag">Petualangan</span>
+          <div class="game-icon">🧭</div>
+          <h3>Labirin Bintang</h3>
+          <p>Gerakkan karakter, ambil bintang, lalu cari pintu keluar.</p>
+        </button>
+
+        <button class="game-card g1" onclick="openGame('weather')">
+          <span class="tag">Alam</span>
+          <div class="game-icon">🌦️</div>
+          <h3>Tebak Cuaca</h3>
+          <p>Cocokkan ikon cuaca dengan nama cuaca yang benar.</p>
+        </button>
+
+        <button class="game-card g2" onclick="openGame('clock')">
+          <span class="tag">Waktu</span>
+          <div class="game-icon">🕒</div>
+          <h3>Belajar Jam</h3>
+          <p>Lihat jam analog sederhana, lalu pilih pukul berapa.</p>
+        </button>
+
+        <button class="game-card g3" onclick="openGame('rocket')">
+          <span class="tag">Menantang</span>
+          <div class="game-icon">🚀</div>
+          <h3>Roket Rintangan</h3>
+          <p>Terbangkan roket, ambil bintang, dan hindari meteor yang bergerak cepat.</p>
+        </button>
+
+        <button class="game-card g4" onclick="openGame('voicequiz')">
+          <span class="tag">Suara</span>
+          <div class="game-icon">🎙️</div>
+          <h3>Kuis Jawab Suara</h3>
+          <p>Jawab pertanyaan dengan suara. Bisa pakai ketik jika mikrofon tidak aktif.</p>
+        </button>
+
+        <button class="game-card g5" onclick="openGame('readword')">
+          <span class="tag">Suara</span>
+          <div class="game-icon">📖</div>
+          <h3>Baca Kata Suara</h3>
+          <p>Level 1 satu kata, Level 2 dua kata, Level 3 tiga kata. Ucapkan dengan mikrofon.</p>
+        </button>
+      </div>
+
+      <p class="footer-note">Tips: tekan “Game Acak” supaya mainnya lebih seru dan tidak boring ✨</p>
+    </section>
+
+    <section id="gameScreen" class="screen">
+      <div class="game-head">
+        <div class="title-area">
+          <h2 id="gameTitle">Game</h2>
+          <p id="gameDesc">Deskripsi game</p>
+        </div>
+        <div class="btn-row">
+          <button class="btn yellow" onclick="restartCurrentGame()">🔁 Ulang</button>
+          <button class="btn green" onclick="openRandomGame()">🎲 Acak</button>
+          <button class="btn red" onclick="backMenu()">🏠 Menu</button>
+        </div>
+      </div>
+
+      <div class="hud">
+        <div class="box">Level <span id="hudLevel" class="big">1</span></div>
+        <div class="box">Skor <span id="hudScore" class="big">0</span></div>
+        <div class="box">Nyawa <span id="hudLives" class="big">❤❤❤</span></div>
+        <div class="box">Target <span id="hudTarget" class="big">0/0</span></div>
+      </div>
+
+      <div class="progress-wrap">
+        <div id="progress" class="progress"></div>
+      </div>
+
+      <div id="gameContainer"></div>
+      <div id="message" class="message"></div>
+    </section>
+  </main>
+
+  <script>
+    const loginScreen = document.getElementById("loginScreen");
+    const playerNameInput = document.getElementById("playerNameInput");
+    const playerNameDisplay = document.getElementById("playerNameDisplay");
+    const menu = document.getElementById("menu");
+    const gameScreen = document.getElementById("gameScreen");
+    const gameContainer = document.getElementById("gameContainer");
+    const message = document.getElementById("message");
+
+    const hudLevel = document.getElementById("hudLevel");
+    const hudScore = document.getElementById("hudScore");
+    const hudLives = document.getElementById("hudLives");
+    const hudTarget = document.getElementById("hudTarget");
+    const progress = document.getElementById("progress");
+    const totalScoreEl = document.getElementById("totalScore");
+    const bestScoreEl = document.getElementById("bestScore");
+
+    const gameNames = ["star","balloon","memory","color","math","animal","word","shape","quiz","count","english","order","mole","simon","odd","trash","job","maze","weather","clock","rocket","voicequiz","readword","mission","money","pattern","category","story"];
+
+    let currentGame = "";
+    let state = {};
+    let timerId = null;
+    let loopId = null;
+    let audioCtx = null;
+    let playerName = localStorage.getItem("ceriaPlayerName") || "";
+    const DEFAULT_MAX_LEVEL = 5;
+
+    // Batas level dibuat berbeda-beda.
+    // Game dengan bank soal sedikit dibuat lebih pendek supaya tidak terasa mengulang.
+    const MAX_LEVEL_BY_GAME = {
+      color: 2,
+      shape: 2,
+      weather: 2,
+      trash: 2,
+      job: 2,
+      animal: 3,
+      english: 3,
+      readword: 3,
+      voicequiz: 3,
+      quiz: 3,
+      clock: 3,
+      word: 3,
+      odd: 3,
+      count: 3,
+      order: 3,
+      math: 5,
+      memory: 5,
+      simon: 5,
+      star: 5,
+      balloon: 5,
+      mole: 5,
+      rocket: 5,
+      maze: 5,
+      mission: 1,
+      money: 3,
+      pattern: 3,
+      category: 3,
+      story: 3
+    };
+
+    function currentMaxLevel(){
+      return MAX_LEVEL_BY_GAME[currentGame] || DEFAULT_MAX_LEVEL;
+    }
+
+    // Menyimpan soal yang sudah muncul pada sesi game saat ini.
+    // Tujuannya: soal/petunjuk yang sama tidak muncul lagi di next soal atau level.
+    let questionMemory = {};
+
+    function resetQuestionMemory(gameName){
+      questionMemory[gameName] = {};
+    }
+
+    function stopBecauseNoQuestions(){
+      noMoreQuestionsWin();
+      const err = new Error("NO_MORE_QUESTIONS");
+      err.name = "NoMoreQuestions";
+      throw err;
+    }
+
+    window.addEventListener("error", function(e){
+      if(e.error && e.error.message === "NO_MORE_QUESTIONS"){
+        e.preventDefault();
+        return true;
+      }
+    });
+
+    function pickUnique(bucket, items, idFn){
+      if(!items || items.length === 0) stopBecauseNoQuestions();
+
+      const gameKey = currentGame || "global";
+      if(!questionMemory[gameKey]) questionMemory[gameKey] = {};
+      if(!questionMemory[gameKey][bucket]) questionMemory[gameKey][bucket] = [];
+
+      const getId = idFn || ((x) => {
+        if(typeof x === "string" || typeof x === "number") return String(x);
+        return JSON.stringify(x);
+      });
+
+      const usedSet = new Set(questionMemory[gameKey][bucket]);
+      let available = items.filter(item => !usedSet.has(String(getId(item))));
+
+      // Jika semua soal/variasi sudah pernah keluar, game dianggap menang.
+      // Soal tidak akan dibuka ulang agar tidak ada pengulangan.
+      if(available.length === 0){
+        stopBecauseNoQuestions();
+      }
+
+      const chosen = available[Math.floor(Math.random() * available.length)];
+      questionMemory[gameKey][bucket].push(String(getId(chosen)));
+      return chosen;
+    }
+
+    function makeUniqueGenerated(bucket, generator, idFn, maxTries=120){
+      const gameKey = currentGame || "global";
+      if(!questionMemory[gameKey]) questionMemory[gameKey] = {};
+      if(!questionMemory[gameKey][bucket]) questionMemory[gameKey][bucket] = [];
+
+      const usedSet = new Set(questionMemory[gameKey][bucket]);
+      let chosen = generator();
+      let chosenId = String(idFn(chosen));
+
+      for(let i=0; i<maxTries && usedSet.has(chosenId); i++){
+        chosen = generator();
+        chosenId = String(idFn(chosen));
+      }
+
+      // Kalau generator sudah terlalu sering menghasilkan soal yang sama,
+      // anggap variasi soal untuk game itu sudah habis.
+      if(usedSet.has(chosenId)){
+        stopBecauseNoQuestions();
+      }
+
+      questionMemory[gameKey][bucket].push(chosenId);
+      return chosen;
+    }
+
+    let totalScore = Number(localStorage.getItem("ceriaTotalScore") || 0);
+    let bestScore = Number(localStorage.getItem("ceriaBestScore") || 0);
+    totalScoreEl.textContent = totalScore;
+    bestScoreEl.textContent = bestScore;
+
+    function sound(type="good"){
+      try{
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.value = type === "bad" ? 180 : type === "win" ? 760 : 520;
+        gain.gain.setValueAtTime(.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(.001, audioCtx.currentTime + .18);
+        osc.start();
+        osc.stop(audioCtx.currentTime + .18);
+      }catch(e){}
+    }
+
+    function setTitle(title, desc){
+      document.getElementById("gameTitle").textContent = title;
+      document.getElementById("gameDesc").textContent = desc;
+    }
+
+    function updateHud(){
+      const maxLevel = currentMaxLevel();
+      hudLevel.textContent = `${Math.min(state.level ?? 1, maxLevel)}/${maxLevel}`;
+      hudScore.textContent = state.score ?? 0;
+      const lives = Math.max(0,state.lives ?? 0);
+      const maxLives = state.maxLives || 3;
+      hudLives.textContent = "❤".repeat(lives) + "♡".repeat(Math.max(0,maxLives-lives));
+      hudTarget.textContent = `${state.collected ?? 0}/${state.target ?? 0}`;
+      let pct = state.target ? Math.min(100, ((state.collected || 0) / state.target) * 100) : 0;
+      progress.style.width = pct + "%";
+    }
+
+    function addScore(points){
+      scorePop(points);
+      flashScreen("good");
+      state.score += points;
+      totalScore += points;
+      if(state.score > bestScore) bestScore = state.score;
+      localStorage.setItem("ceriaTotalScore", totalScore);
+      localStorage.setItem("ceriaBestScore", bestScore);
+      totalScoreEl.textContent = totalScore;
+      bestScoreEl.textContent = bestScore;
+      updateHud();
+    }
+
+    function resetRecord(){
+      localStorage.removeItem("ceriaTotalScore");
+      localStorage.removeItem("ceriaBestScore");
+      totalScore = 0;
+      bestScore = 0;
+      totalScoreEl.textContent = 0;
+      bestScoreEl.textContent = 0;
+      alert("Skor berhasil di-reset!");
+    }
+
+    function clearGame(){
+      if(timerId) clearInterval(timerId);
+      if(loopId) cancelAnimationFrame(loopId);
+      timerId = null;
+      loopId = null;
+      document.onkeydown = null;
+      document.onkeyup = null;
+      gameContainer.innerHTML = "";
+      message.textContent = "";
+    }
+
+    function openGame(name){
+      clearGame();
+      currentGame = name;
+      resetQuestionMemory(name);
+      loginScreen.classList.remove("active");
+      menu.classList.remove("active");
+      gameScreen.classList.add("active");
+
+      speakText("Semangat bermain, " + getPlayerName());
+
+      if(name === "star") startStarGame();
+      if(name === "balloon") startBalloonGame();
+      if(name === "memory") startMemoryGame();
+      if(name === "color") startColorGame();
+      if(name === "math") startMathGame();
+      if(name === "animal") startAnimalGame();
+      if(name === "word") startWordGame();
+      if(name === "shape") startShapeGame();
+      if(name === "quiz") startQuizGame();
+      if(name === "count") startCountGame();
+      if(name === "english") startEnglishGame();
+      if(name === "order") startOrderGame();
+      if(name === "mole") startMoleGame();
+      if(name === "simon") startSimonGame();
+      if(name === "odd") startOddGame();
+      if(name === "trash") startTrashGame();
+      if(name === "job") startJobGame();
+      if(name === "maze") startMazeGame();
+      if(name === "weather") startWeatherGame();
+      if(name === "clock") startClockGame();
+      if(name === "rocket") startRocketGame();
+      if(name === "voicequiz") startVoiceQuizGame();
+      if(name === "readword") startReadWordGame();
+      if(name === "mission") startMissionGame();
+      if(name === "money") startMoneyGame();
+      if(name === "pattern") startPatternGame();
+      if(name === "category") startCategoryGame();
+      if(name === "story") startStoryGame();
+    }
+
+    function openRandomGame(){
+      let pick = gameNames[Math.floor(Math.random()*gameNames.length)];
+      if(gameNames.length > 1 && pick === currentGame){
+        pick = gameNames[Math.floor(Math.random()*gameNames.length)];
+      }
+      openGame(pick);
+    }
+
+    function restartCurrentGame(){
+      if(currentGame) openGame(currentGame);
+    }
+
+    function backMenu(){
+      clearGame();
+      currentGame = "";
+      loginScreen.classList.remove("active");
+      gameScreen.classList.remove("active");
+      menu.classList.add("active");
+    }
+
+    function confetti(){
+      const colors = ["#FF4D6D","#FFD93D","#6BCB77","#4D96FF","#B983FF","#FF9F1C"];
+      for(let i=0;i<45;i++){
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random()*100 + "vw";
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+        c.style.animationDelay = Math.random()*.35 + "s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),1800);
+      }
+    }
+
+    function flashScreen(kind){
+      // Efek layar berkedip dimatikan untuk jawaban benar dan salah.
+      return;
+    }
+
+    function showBurst(kind, main, sub=""){
+      const div = document.createElement("div");
+      div.className = `feedback-burst feedback-${kind}`;
+      div.innerHTML = `${main}${sub ? `<span class="mini">${sub}</span>` : ""}`;
+      document.body.appendChild(div);
+      setTimeout(()=>div.remove(), 1200);
+    }
+
+    function scorePop(points){
+      const pop = document.createElement("div");
+      pop.className = "score-pop";
+      pop.textContent = `+${points}`;
+      pop.style.left = (45 + Math.random()*10) + "vw";
+      pop.style.top = (42 + Math.random()*10) + "vh";
+      document.body.appendChild(pop);
+      setTimeout(()=>pop.remove(), 1000);
+    }
+
+    function speakText(text){
+      try{
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "id-ID";
+        u.rate = .88;
+        u.pitch = 1.25;
+        window.speechSynthesis.speak(u);
+      }catch(e){}
+    }
+
+    function cleanPlayerName(name){
+      return (name || "").trim().replace(/[^\p{L}\p{N}\s.'-]/gu, "").slice(0, 18);
+    }
+
+    function getPlayerName(){
+      return playerName || "teman";
+    }
+
+    function updatePlayerNameDisplay(){
+      playerNameDisplay.textContent = playerName || "-";
+    }
+
+    function savePlayerName(){
+      const name = cleanPlayerName(playerNameInput.value);
+
+      if(!name){
+        playerNameInput.focus();
+        showBurst("wrong", "😊 Isi nama dulu", "Supaya game bisa menyemangati kamu.");
+        speakText("Masukkan nama dulu ya");
+        return;
+      }
+
+      playerName = name;
+      localStorage.setItem("ceriaPlayerName", playerName);
+      updatePlayerNameDisplay();
+
+      loginScreen.classList.remove("active");
+      menu.classList.add("active");
+
+      speakText("Semangat bermain, " + getPlayerName());
+    }
+
+    function showLogin(changeName=false){
+      clearGame();
+      currentGame = "";
+      gameScreen.classList.remove("active");
+      menu.classList.remove("active");
+      loginScreen.classList.add("active");
+      playerNameInput.value = playerName || "";
+      setTimeout(()=>playerNameInput.focus(), 100);
+
+      if(changeName){
+        speakText("Silakan ganti nama");
+      }
+    }
+
+    function initLogin(){
+      updatePlayerNameDisplay();
+
+      if(playerName){
+        loginScreen.classList.remove("active");
+        menu.classList.add("active");
+      }else{
+        loginScreen.classList.add("active");
+        menu.classList.remove("active");
+        setTimeout(()=>playerNameInput.focus(), 100);
+      }
+
+      playerNameInput.addEventListener("keydown", function(e){
+        if(e.key === "Enter") savePlayerName();
+      });
+    }
+
+    function getSpeechRecognizer(){
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if(!SR) return null;
+      const rec = new SR();
+      rec.lang = "id-ID";
+      rec.interimResults = false;
+      rec.maxAlternatives = 1;
+      return rec;
+    }
+
+
+    function maxLevelWin(){
+      if(!state || state.running === false) return;
+
+      const maxLevel = currentMaxLevel();
+      state.running = false;
+      if(typeof state.target === "number"){
+        state.collected = state.target;
+      }
+
+      sound("win");
+      confetti();
+      flashScreen("good");
+      speakText("Hore kamu menang, " + getPlayerName());
+      showBurst("level", "🏆 MENANG!", `Level ${maxLevel} selesai!`);
+      showEndCard(
+        "win",
+        "🏆",
+        "Kamu Menang!",
+        `Selamat! Kamu berhasil menyelesaikan Level ${maxLevel}. Tekan Ulangi Game untuk bermain dari awal.`
+      );
+
+      message.textContent = `Level ${maxLevel} selesai. Kamu menang!`;
+      updateHud();
+    }
+
+    function winLevel(nextFunction){
+      const maxLevel = currentMaxLevel();
+
+      if((state.level ?? 1) >= maxLevel){
+        maxLevelWin();
+        return;
+      }
+
+      sound("win");
+      confetti();
+      flashScreen("good");
+      showBurst("level", "🎉 LEVEL UP!", `Kamu naik ke Level ${(state.level ?? 1) + 1}!`);
+      message.textContent = "Hebat! Naik level! 🎉";
+      state.level++;
+      state.collected = 0;
+      state.target += 2;
+
+      if(currentGame === "memory"){
+        state.maxLives = 5;
+        state.lives = 5;
+      }
+
+      updateHud();
+      setTimeout(nextFunction, 900);
+    }
+
+    function showMiss(text="Miss! Coba lagi ya", voiceText="Yah miss"){
+      // Untuk game refleks/klik seperti Tangkap Tikus.
+      // Kalau nyawa habis, suara akhir menjadi "Yah kalah", bukan "Yah miss".
+      sound("bad");
+      flashScreen("bad");
+      showBurst("wrong", "✨ MISS!", text);
+      state.lives--;
+      message.textContent = text;
+      updateHud();
+
+      if(state.lives <= 0){
+        gameOver("Game selesai 😢");
+        return true;
+      }
+
+      speakText(voiceText);
+      return false;
+    }
+
+    function loseLife(text, voiceText="Yah kamu salah"){
+      // Kalau nyawa habis, suara akhir menjadi "Yah kalah", bukan "Yah kamu salah".
+      sound("bad");
+      flashScreen("bad");
+      showBurst("wrong", "😅 YAH SALAH", text);
+      state.lives--;
+      message.textContent = text;
+      updateHud();
+
+      if(state.lives <= 0){
+        gameOver("Game selesai 😢");
+        return true;
+      }
+
+      speakText(voiceText);
+      return false;
+    }
+
+    function showEndCard(kind, emoji, title, description){
+      const safeKind = kind === "win" ? "win" : "over";
+      gameContainer.innerHTML = `
+        <div class="end-card ${safeKind}">
+          <span class="emoji">${emoji}</span>
+          <h3>${title}</h3>
+          <p>${description}</p>
+          <div class="btn-row">
+            <button class="btn yellow" onclick="restartCurrentGame()">🔁 Ulangi Game</button>
+            <button class="btn green" onclick="openRandomGame()">➡️ Next Game</button>
+            <button class="btn red" onclick="backMenu()">🏠 Menu</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function noMoreQuestionsWin(){
+      if(!state || state.running === false) return;
+
+      state.running = false;
+      if(typeof state.target === "number"){
+        state.collected = state.target;
+      }
+
+      sound("win");
+      confetti();
+      flashScreen("good");
+      speakText("Hore kamu menang, " + getPlayerName());
+      showBurst("level", "🏆 MENANG!", "Semua soal sudah habis tanpa pengulangan.");
+      showEndCard(
+        "win",
+        "🏆",
+        "Kamu Menang!",
+        "Semua soal yang tersedia sudah berhasil ditampilkan tanpa mengulang soal lama."
+      );
+
+      message.textContent = "Semua soal sudah habis. Kamu menang!";
+      updateHud();
+    }
+
+    function gameOver(text){
+      sound("bad");
+      speakText("Yah kalah");
+      showBurst("over", "💫 GAME OVER", "Tidak apa-apa, coba lagi ya!");
+      message.textContent = text + " Pilih Ulangi Game atau Menu.";
+      state.running = false;
+      showEndCard(
+        "over",
+        "💫",
+        "Game Over",
+        text + " Tidak apa-apa, kamu bisa mencoba lagi."
+      );
+      updateHud();
+    }
+
+    initLogin();
+
+    /* =======================
+       GAME 1: TANGKAP BINTANG
+    ======================== */
+    function startStarGame(){
+      setTitle("⭐ Tangkap Bintang", "Gunakan panah kiri/kanan atau gerakkan mouse. Tangkap bintang dan hindari bom.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true};
+
+      const canvas = document.createElement("canvas");
+      canvas.width = 1000;
+      canvas.height = 520;
+      gameContainer.appendChild(canvas);
+      const ctx = canvas.getContext("2d");
+
+      let player = {x:500,y:455,w:150,h:34};
+      let items = [];
+      let frame = 0;
+      let keys = {};
+
+      document.onkeydown = e => keys[e.key] = true;
+      document.onkeyup = e => keys[e.key] = false;
+
+      canvas.addEventListener("mousemove", e=>{
+        const r = canvas.getBoundingClientRect();
+        player.x = ((e.clientX-r.left)/r.width)*canvas.width;
+      });
+
+      canvas.addEventListener("touchmove", e=>{
+        e.preventDefault();
+        const r = canvas.getBoundingClientRect();
+        player.x = ((e.touches[0].clientX-r.left)/r.width)*canvas.width;
+      }, {passive:false});
+
+      function drawStar(cx,cy,spikes,outer,inner,color){
+        let rot = Math.PI/2*3;
+        let x = cx;
+        let y = cy;
+        let step = Math.PI/spikes;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy-outer);
+        for(let i=0;i<spikes;i++){
+          x = cx + Math.cos(rot)*outer;
+          y = cy + Math.sin(rot)*outer;
+          ctx.lineTo(x,y);
+          rot += step;
+          x = cx + Math.cos(rot)*inner;
+          y = cy + Math.sin(rot)*inner;
+          ctx.lineTo(x,y);
+          rot += step;
+        }
+        ctx.lineTo(cx,cy-outer);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+      }
+
+      function spawn(){
+        const r = Math.random();
+        let type = "star";
+        if(r > .72) type = "bomb";
+        if(r > .92) type = "heart";
+
+        items.push({
+          x:70+Math.random()*860,
+          y:-30,
+          type,
+          speed:2.4 + state.level*.7 + Math.random()*2,
+          size: type==="bomb" ? 24 : 27
+        });
+      }
+
+      function loop(){
+        if(!state.running) return;
+
+        frame++;
+        if(keys.ArrowLeft || keys.a || keys.A) player.x -= 9;
+        if(keys.ArrowRight || keys.d || keys.D) player.x += 9;
+        player.x = Math.max(85, Math.min(915, player.x));
+
+        if(frame % Math.max(25, 70-state.level*8) === 0) spawn();
+
+        ctx.clearRect(0,0,1000,520);
+        let grd = ctx.createLinearGradient(0,0,0,520);
+        grd.addColorStop(0,"#BDEFFF");
+        grd.addColorStop(1,"#FFF6C8");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0,0,1000,520);
+        ctx.fillStyle = "#8FD694";
+        ctx.fillRect(0,470,1000,50);
+        ctx.font = "42px Comic Sans MS";
+        ctx.fillText("☀️", 60, 70);
+        ctx.fillText("☁️", 190, 85);
+        ctx.fillText("☁️", 780, 95);
+
+        ctx.fillStyle = "#FF9F1C";
+        ctx.beginPath();
+        ctx.roundRect(player.x-player.w/2, player.y, player.w, player.h, 18);
+        ctx.fill();
+
+        ctx.fillStyle = "#D97904";
+        ctx.beginPath();
+        ctx.roundRect(player.x-player.w/2+18, player.y+8, player.w-36, 10, 8);
+        ctx.fill();
+
+        for(let i=items.length-1;i>=0;i--){
+          const it = items[i];
+          it.y += it.speed;
+
+          if(it.type === "star") drawStar(it.x,it.y,5,it.size,it.size/2,"#FFD93D");
+          if(it.type === "heart"){
+            ctx.font = "42px Comic Sans MS";
+            ctx.fillText("❤", it.x-22, it.y+18);
+          }
+          if(it.type === "bomb"){
+            ctx.fillStyle = "#222";
+            ctx.beginPath();
+            ctx.arc(it.x,it.y,it.size,0,Math.PI*2);
+            ctx.fill();
+            ctx.font = "22px Comic Sans MS";
+            ctx.fillText("💥", it.x-18, it.y+8);
+          }
+
+          const hit = it.y > player.y-10 && it.y < player.y+45 && Math.abs(it.x-player.x) < 86;
+
+          if(hit){
+            if(it.type === "star"){
+              sound("good");
+              addScore(10);
+              state.collected++;
+              message.textContent = "Bintang tertangkap! ⭐";
+            }else if(it.type === "heart"){
+              sound("good");
+              state.lives = Math.min(3,state.lives+1);
+              message.textContent = "Bonus hati! ❤";
+            }else{
+              if(loseLife("Awas bom! 💣", "Yah terkena bom")) return;
+            }
+            items.splice(i,1);
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(()=>{items=[];});
+            }
+          }else if(it.y > 540){
+            items.splice(i,1);
+          }
+        }
+
+        loopId = requestAnimationFrame(loop);
+      }
+
+      updateHud();
+      loop();
+    }
+
+    /* =======================
+       GAME 2: PECAH BALON
+    ======================== */
+    function startBalloonGame(){
+      setTitle("🎈 Pecah Balon", "Klik balon warna-warni, tetapi hindari balon bom hitam.");
+      state = {level:1, score:0, lives:3, collected:0, target:8, running:true, time:30};
+
+      const area = document.createElement("div");
+      area.className = "play-area";
+      area.style.padding = "0";
+      gameContainer.appendChild(area);
+
+      const colors = ["#FF4D6D","#FFD93D","#6BCB77","#4D96FF","#B983FF","#FF9F1C"];
+
+      function spawnBalloon(){
+        if(!state.running) return;
+
+        const bal = document.createElement("div");
+        const isBomb = Math.random() < Math.min(0.34, 0.14 + state.level * 0.04);
+
+        bal.className = "balloon";
+        bal.style.left = Math.random() * Math.max(10,(area.clientWidth-90)) + "px";
+        bal.style.top = Math.random() * Math.max(10,(area.clientHeight-150)) + "px";
+
+        if(isBomb){
+          bal.style.background = "linear-gradient(135deg,#2b2b2b,#5a5a5a)";
+          bal.textContent = "💣";
+          bal.title = "Balon bom, jangan ditekan!";
+        }else{
+          bal.style.background = colors[Math.floor(Math.random()*colors.length)];
+          bal.textContent = "✨";
+          bal.title = "Balon aman, tekan!";
+        }
+
+        area.appendChild(bal);
+
+        const life = Math.max(800, 2300 - state.level*260);
+        const missed = setTimeout(()=>{
+          if(bal.parentNode){
+            bal.remove();
+          }
+        }, life);
+
+        bal.onclick = ()=>{
+          if(!state.running) return;
+          clearTimeout(missed);
+          bal.classList.add("pop");
+          setTimeout(()=>bal.remove(),230);
+
+          if(isBomb){
+            loseLife("Balon bom meledak! 💣", "Yah terkena bom");
+            return;
+          }
+
+          sound("good");
+          addScore(10);
+          state.collected++;
+          message.textContent = "POP! Balon pecah! 🎈";
+          updateHud();
+
+          if(state.collected >= state.target){
+            winLevel(()=>{
+              state.time += 8;
+              area.innerHTML = "";
+            });
+          }
+        };
+      }
+
+      timerId = setInterval(()=>{
+        if(!state.running) return;
+        state.time--;
+        message.textContent = `Sisa waktu: ${state.time} detik | Hindari balon bom 💣`;
+        if(state.time <= 0){
+          gameOver("Waktu habis ⏰");
+        }
+      },1000);
+
+      function spawnLoop(){
+        if(!state.running) return;
+        spawnBalloon();
+        setTimeout(spawnLoop, Math.max(300, 950-state.level*95));
+      }
+
+      message.textContent = "Pecahkan balon aman, jangan tekan balon bom 💣";
+      updateHud();
+      spawnLoop();
+    }
+
+    /* =======================
+       GAME 3: MEMORY BUAH
+    ======================== */
+    function startMemoryGame(){
+      setTitle("🍓 Memory Buah", "Buka dua kartu dan cari pasangan gambar yang sama.");
+      state = {level:1, score:0, lives:5, maxLives:5, collected:0, target:4, running:true};
+      makeMemoryBoard();
+    }
+
+    function makeMemoryBoard(){
+      gameContainer.innerHTML = "";
+      const grid = document.createElement("div");
+      grid.className = "memory-grid";
+      gameContainer.appendChild(grid);
+
+      const icons = ["🍓","🍌","🍎","🍇","🍉","🍒","🥝","🍍","🥕","🌽"];
+      const pairs = Math.min(10, 3 + state.level);
+      state.target = pairs;
+      state.collected = 0;
+
+      let cards = icons.slice(0,pairs);
+      cards = [...cards, ...cards].sort(()=>Math.random()-.5);
+
+      let open = [];
+      let busy = false;
+
+      cards.forEach(icon=>{
+        const card = document.createElement("button");
+        card.className = "mem-card";
+        card.textContent = icon;
+        card.dataset.icon = icon;
+        grid.appendChild(card);
+
+        card.onclick = ()=>{
+          if(!state.running || busy || card.classList.contains("open") || card.classList.contains("done")) return;
+
+          card.classList.add("open");
+          open.push(card);
+
+          if(open.length === 2){
+            busy = true;
+            const [a,b] = open;
+
+            if(a.dataset.icon === b.dataset.icon){
+              setTimeout(()=>{
+                sound("good");
+                a.classList.add("done");
+                b.classList.add("done");
+                open = [];
+                busy = false;
+                addScore(15);
+                state.collected++;
+                message.textContent = "Pasangan benar! 🎉";
+                updateHud();
+
+                if(state.collected >= state.target){
+                  winLevel(makeMemoryBoard);
+                }
+              },450);
+            }else{
+              setTimeout(()=>{
+                a.classList.remove("open");
+                b.classList.remove("open");
+                open = [];
+                busy = false;
+                loseLife("Belum cocok, coba lagi ya!");
+              },750);
+            }
+          }
+        };
+      });
+
+      updateHud();
+    }
+
+    /* =======================
+       GAME 4: TEBAK WARNA
+    ======================== */
+    function startColorGame(){
+      setTitle("🌈 Tebak Warna", "Klik warna yang sesuai dengan tulisan target.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true};
+      makeColorRound();
+    }
+
+    function makeColorRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const colors = [
+        {name:"MERAH", hex:"#FF4D6D"},
+        {name:"BIRU", hex:"#4D96FF"},
+        {name:"KUNING", hex:"#FFD93D"},
+        {name:"HIJAU", hex:"#6BCB77"},
+        {name:"UNGU", hex:"#B983FF"},
+        {name:"ORANYE", hex:"#FF9F1C"}
+      ];
+
+      const target = pickUnique("color-target", colors, c => c.name);
+
+      const title = document.createElement("div");
+      title.textContent = "Klik warna:";
+      title.className = "small-clue";
+
+      const word = document.createElement("div");
+      word.className = "big-question";
+      word.textContent = target.name;
+      word.style.color = target.hex;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      let totalOption = Math.min(6, 2 + state.level);
+      let choices = [...colors].sort(()=>Math.random()-.5).slice(0,totalOption);
+      if(!choices.some(c=>c.name === target.name)) choices[0] = target;
+      choices.sort(()=>Math.random()-.5);
+
+      choices.forEach(c=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn color";
+        btn.style.background = c.hex;
+        btn.textContent = c.name;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(c.name === target.name){
+            sound("good");
+            addScore(10);
+            state.collected++;
+            message.textContent = "Benar! Kamu hebat! ⭐";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeColorRound);
+            }else{
+              setTimeout(makeColorRound,650);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Oops, warna belum tepat.")) setTimeout(makeColorRound,750);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(title);
+      box.appendChild(word);
+      box.appendChild(options);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 5: HITUNG CEPAT
+    ======================== */
+    function startMathGame(){
+      setTitle("➕ Hitung Cepat", "Pilih jawaban yang benar. Ada tambah, kurang, dan kali sederhana.");
+      state = {level:1, score:0, lives:3, collected:0, target:7, running:true};
+      makeMathRound();
+    }
+
+    function makeMathRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const max = 5 + state.level * 4;
+      const mathData = makeUniqueGenerated(
+        "math-question",
+        () => {
+          let a = Math.floor(Math.random()*max)+1;
+          let b = Math.floor(Math.random()*max)+1;
+          let ops = ["+","-"];
+          if(state.level >= 3) ops.push("×");
+          const op = ops[Math.floor(Math.random()*ops.length)];
+          let answer;
+
+          if(op === "+") answer = a + b;
+          if(op === "-"){
+            if(b > a) [a,b] = [b,a];
+            answer = a - b;
+          }
+          if(op === "×"){
+            a = Math.floor(Math.random()*(3+state.level))+1;
+            b = Math.floor(Math.random()*(3+state.level))+1;
+            answer = a * b;
+          }
+
+          return {a,b,op,answer};
+        },
+        q => `${q.a}${q.op}${q.b}`
+      );
+
+      const a = mathData.a;
+      const b = mathData.b;
+      const op = mathData.op;
+      const answer = mathData.answer;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Berapa hasilnya?";
+
+      const q = document.createElement("div");
+      q.className = "big-question";
+      q.textContent = `${a} ${op} ${b} = ?`;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      let answers = new Set([answer]);
+      while(answers.size < 4){
+        let fake = answer + Math.floor(Math.random()*11)-5;
+        if(fake >= 0) answers.add(fake);
+      }
+
+      [...answers].sort(()=>Math.random()-.5).forEach(num=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#FFE066)";
+        btn.textContent = num;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+          if(num === answer){
+            sound("good");
+            addScore(10 + state.level);
+            state.collected++;
+            message.textContent = "Pintar! Jawaban benar ✅";
+            updateHud();
+            if(state.collected >= state.target){
+              winLevel(makeMathRound);
+            }else{
+              setTimeout(makeMathRound,600);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Belum tepat. Coba soal berikutnya ya.")) setTimeout(makeMathRound,750);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(clue);
+      box.appendChild(q);
+      box.appendChild(options);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 6: TEBAK HEWAN
+    ======================== */
+    function startAnimalGame(){
+      setTitle("🦁 Tebak Hewan", "Baca petunjuk, lalu pilih hewan yang benar.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true};
+      makeAnimalRound();
+    }
+
+    function makeAnimalRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const animals = [
+        {name:"KUCING", icon:"🐱", clue:"Aku suka mengeong dan suka ikan. Siapakah aku?"},
+        {name:"ANJING", icon:"🐶", clue:"Aku suka menggonggong dan menjaga rumah. Siapakah aku?"},
+        {name:"SINGA", icon:"🦁", clue:"Aku disebut raja hutan dan punya rambut tebal. Siapakah aku?"},
+        {name:"GAJAH", icon:"🐘", clue:"Badanku besar dan hidungku panjang. Siapakah aku?"},
+        {name:"MONYET", icon:"🐵", clue:"Aku suka memanjat pohon dan makan pisang. Siapakah aku?"},
+        {name:"IKAN", icon:"🐟", clue:"Aku hidup di air dan berenang. Siapakah aku?"},
+        {name:"BURUNG", icon:"🐦", clue:"Aku punya sayap dan bisa terbang. Siapakah aku?"},
+        {name:"KELINCI", icon:"🐰", clue:"Telingaku panjang dan aku suka wortel. Siapakah aku?"},
+        {name:"SAPI", icon:"🐮", clue:"Aku menghasilkan susu dan suka makan rumput. Siapakah aku?"},
+        {name:"KUDA", icon:"🐴", clue:"Aku bisa berlari cepat dan sering ditunggangi. Siapakah aku?"},
+        {name:"AYAM", icon:"🐔", clue:"Aku berkokok di pagi hari dan bertelur. Siapakah aku?"},
+        {name:"BEBEK", icon:"🦆", clue:"Aku suka berenang dan bersuara kwek-kwek. Siapakah aku?"},
+        {name:"KUPU-KUPU", icon:"🦋", clue:"Sayapku indah dan aku suka bunga. Siapakah aku?"},
+        {name:"KURA-KURA", icon:"🐢", clue:"Aku berjalan pelan dan membawa rumah di punggung. Siapakah aku?"},
+        {name:"KATAK", icon:"🐸", clue:"Aku suka melompat dan hidup dekat air. Siapakah aku?"},
+        {name:"LEBAH", icon:"🐝", clue:"Aku membuat madu dan suka bunga. Siapakah aku?"},
+        {name:"ULAR", icon:"🐍", clue:"Aku tidak punya kaki dan berjalan melata. Siapakah aku?"}
+      ];
+
+      const target = pickUnique("animal-target", animals, a => a.name);
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = "❓";
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = target.clue;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      let totalOption = Math.min(6, 2 + state.level);
+      let choices = [...animals].sort(()=>Math.random()-.5).slice(0,totalOption);
+      if(!choices.some(c=>c.name === target.name)) choices[0] = target;
+      choices.sort(()=>Math.random()-.5);
+
+      choices.forEach(a=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#BDE0FE)";
+        btn.innerHTML = `<div style="font-size:44px">${a.icon}</div><div>${a.name}</div>`;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+          if(a.name === target.name){
+            sound("good");
+            addScore(12);
+            state.collected++;
+            message.textContent = `Benar! Jawabannya ${target.icon} ${target.name}`;
+            updateHud();
+            if(state.collected >= state.target){
+              winLevel(makeAnimalRound);
+            }else{
+              setTimeout(makeAnimalRound,850);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Oops, bukan hewan itu.")) setTimeout(makeAnimalRound,900);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(options);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 7: SUSUN KATA
+    ======================== */
+    function startWordGame(){
+      setTitle("🔤 Susun Kata", "Klik huruf untuk menyusun kata sesuai gambar.");
+      state = {level:1, score:0, lives:3, collected:0, target:5, running:true};
+      makeWordRound();
+    }
+
+    function makeWordRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const words = [
+        {word:"APEL", icon:"🍎"},
+        {word:"BOLA", icon:"⚽"},
+        {word:"IKAN", icon:"🐟"},
+        {word:"BUKU", icon:"📚"},
+        {word:"MATA", icon:"👀"},
+        {word:"RUMAH", icon:"🏠"},
+        {word:"KUCING", icon:"🐱"},
+        {word:"MOBIL", icon:"🚗"},
+        {word:"BUNGA", icon:"🌸"},
+        {word:"PISANG", icon:"🍌"}
+      ];
+
+      const available = words.filter(w => w.word.length <= 4 + state.level);
+      const target = pickUnique("word-target", available, w => w.word);
+      let chosen = [];
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = target.icon;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Susun huruf menjadi nama gambar ini:";
+
+      const answerRow = document.createElement("div");
+      answerRow.className = "answer-row";
+
+      const letterRow = document.createElement("div");
+      letterRow.className = "letter-row";
+
+      const controls = document.createElement("div");
+      controls.className = "btn-row";
+      controls.style.justifyContent = "center";
+      controls.style.marginTop = "20px";
+
+      function renderSlots(){
+        answerRow.innerHTML = "";
+        for(let i=0;i<target.word.length;i++){
+          const slot = document.createElement("div");
+          slot.className = "slot";
+          slot.textContent = chosen[i] || "";
+          answerRow.appendChild(slot);
+        }
+      }
+
+      let letters = target.word.split("").sort(()=>Math.random()-.5);
+      if(letters.join("") === target.word && letters.length > 1){
+        letters.reverse();
+      }
+
+      letters.forEach(ch=>{
+        const btn = document.createElement("button");
+        btn.className = "letter";
+        btn.textContent = ch;
+        btn.onclick = ()=>{
+          if(!state.running || btn.disabled) return;
+          chosen.push(ch);
+          btn.disabled = true;
+          btn.style.opacity = ".35";
+          renderSlots();
+
+          if(chosen.length === target.word.length){
+            const result = chosen.join("");
+            if(result === target.word){
+              sound("good");
+              addScore(15);
+              state.collected++;
+              message.textContent = "Kata benar! Hebat! ✅";
+              updateHud();
+              if(state.collected >= state.target){
+                winLevel(makeWordRound);
+              }else{
+                setTimeout(makeWordRound,850);
+              }
+            }else{
+              box.classList.add("shake");
+              setTimeout(()=>box.classList.remove("shake"),250);
+              if(!loseLife("Susunan belum tepat. Coba kata berikutnya.")) setTimeout(makeWordRound,950);
+            }
+          }
+        };
+        letterRow.appendChild(btn);
+      });
+
+      const resetBtn = document.createElement("button");
+      resetBtn.className = "btn yellow";
+      resetBtn.textContent = "↩ Hapus";
+      resetBtn.onclick = makeWordRound;
+
+      controls.appendChild(resetBtn);
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(answerRow);
+      box.appendChild(letterRow);
+      box.appendChild(controls);
+      renderSlots();
+      updateHud();
+    }
+
+    /* =======================
+       GAME 8: CARI BENTUK
+    ======================== */
+    function startShapeGame(){
+      setTitle("🔷 Cari Bentuk", "Klik semua bentuk yang diminta. Jangan salah klik!");
+      state = {level:1, score:0, lives:3, collected:0, target:4, running:true};
+      makeShapeRound();
+    }
+
+    function makeShapeRound(){
+      gameContainer.innerHTML = "";
+      const area = document.createElement("div");
+      area.className = "play-area";
+      gameContainer.appendChild(area);
+
+      const shapes = [
+        {name:"LINGKARAN", cls:"circle", icon:""},
+        {name:"KOTAK", cls:"square", icon:""},
+        {name:"SEGITIGA", cls:"triangle", icon:""}
+      ];
+
+      const colors = [
+        {name:"MERAH", hex:"#FF4D6D"},
+        {name:"KUNING", hex:"#FFD93D"},
+        {name:"HIJAU", hex:"#6BCB77"},
+        {name:"BIRU", hex:"#4D96FF"},
+        {name:"UNGU", hex:"#B983FF"},
+        {name:"ORANYE", hex:"#FF9F1C"}
+      ];
+
+      const combos = [];
+      shapes.forEach(shape => colors.forEach(color => combos.push({shape, color})));
+      const targetData = pickUnique("shape-color-target", combos, x => x.shape.name + "-" + x.color.name);
+      const targetShape = targetData.shape;
+      const targetColor = targetData.color;
+
+      const total = 12 + state.level*2;
+      const targetCount = Math.min(6, 2 + state.level);
+      state.target = targetCount;
+      state.collected = 0;
+      message.textContent = `Cari dan klik: ${targetShape.name} warna ${targetColor.name}`;
+
+      const title = document.createElement("div");
+      title.className = "small-clue";
+      title.style.margin = "0 0 10px";
+      title.textContent = `Klik semua ${targetShape.name} warna ${targetColor.name}`;
+      area.appendChild(title);
+
+      let madeTarget = 0;
+
+      for(let i=0;i<total;i++){
+        let sh = shapes[Math.floor(Math.random()*shapes.length)];
+        let col = colors[Math.floor(Math.random()*colors.length)];
+
+        if(madeTarget < targetCount && (i < targetCount || Math.random() < .35)){
+          sh = targetShape;
+          col = targetColor;
+          madeTarget++;
+        }
+
+        const btn = document.createElement("button");
+        btn.className = `shape-btn ${sh.cls}`;
+        btn.dataset.shape = sh.name;
+        btn.dataset.color = col.name;
+
+        const size = 54 + Math.floor(Math.random()*22);
+        btn.style.width = size + "px";
+        btn.style.height = size + "px";
+        btn.style.background = col.hex;
+        btn.style.setProperty("--shapeColor", col.hex);
+        btn.style.left = Math.random()*Math.max(10, area.clientWidth - 90) + "px";
+        btn.style.top = 70 + Math.random()*Math.max(10, area.clientHeight - 150) + "px";
+
+        btn.onclick = ()=>{
+          if(!state.running || btn.disabled) return;
+
+          if(btn.dataset.shape === targetShape.name && btn.dataset.color === targetColor.name){
+            sound("good");
+            btn.disabled = true;
+            btn.style.opacity = ".22";
+            addScore(10);
+            state.collected++;
+            message.textContent = `Benar! ${targetShape.name} ${targetColor.name} ditemukan.`;
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeShapeRound);
+            }
+          }else{
+            area.classList.add("shake");
+            setTimeout(()=>area.classList.remove("shake"),250);
+            loseLife("Oops, bentuk atau warnanya belum sesuai.");
+          }
+        };
+
+        area.appendChild(btn);
+      }
+
+      updateHud();
+    }
+
+
+    /* =======================
+       GAME 9: KUIS PINTAR
+    ======================== */
+    function startQuizGame(){
+      setTitle("🧠 Kuis Pintar", "Jawab tebak-tebakan edukasi sederhana.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true};
+      makeQuizRound();
+    }
+
+    function makeQuizRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const questions = [
+        {q:"Benda apa yang dipakai saat hujan?", a:"PAYUNG", options:["PAYUNG","TOPI","SENDOK","BANTAL"], icon:"☔"},
+        {q:"Apa warna daun biasanya?", a:"HIJAU", options:["MERAH","HIJAU","UNGU","HITAM"], icon:"🍃"},
+        {q:"Hewan yang menghasilkan susu adalah?", a:"SAPI", options:["SAPI","IKAN","AYAM","BURUNG"], icon:"🥛"},
+        {q:"Benda untuk membaca cerita adalah?", a:"BUKU", options:["BOLA","BUKU","SEPATU","PIRING"], icon:"📚"},
+        {q:"Kita melihat menggunakan apa?", a:"MATA", options:["KAKI","TELINGA","MATA","TANGAN"], icon:"👀"},
+        {q:"Matahari muncul pada waktu?", a:"PAGI", options:["MALAM","PAGI","TENGAH MALAM","TIDUR"], icon:"☀️"},
+        {q:"Alat untuk menulis adalah?", a:"PENSIL", options:["PENSIL","PIRING","SAPU","BOLA"], icon:"✏️"},
+        {q:"Buah yang warnanya sering kuning dan disukai monyet?", a:"PISANG", options:["ANGGUR","PISANG","WORTEL","KENTANG"], icon:"🍌"},
+        {q:"Kita mendengar dengan apa?", a:"TELINGA", options:["TELINGA","HIDUNG","MATA","RAMBUT"], icon:"👂"},
+        {q:"Lampu merah artinya?", a:"BERHENTI", options:["BERHENTI","BERLARI","MAKAN","TIDUR"], icon:"🚦"},
+        {q:"Benda untuk memotong kertas adalah?", a:"GUNTING", options:["GUNTING","SENDOK","BOLA","TOPI"], icon:"✂️"},
+        {q:"Kita mencium bau menggunakan?", a:"HIDUNG", options:["MATA","HIDUNG","KAKI","TANGAN"], icon:"👃"},
+        {q:"Benda yang dipakai di kaki adalah?", a:"SEPATU", options:["SEPATU","TOPI","PIRING","BUKU"], icon:"👟"},
+        {q:"Hewan yang bertelur adalah?", a:"AYAM", options:["AYAM","KUCING","SAPI","KUDA"], icon:"🐔"},
+        {q:"Tempat tidur digunakan untuk?", a:"TIDUR", options:["TIDUR","MAKAN","BERENANG","MENULIS"], icon:"🛏️"},
+        {q:"Benda untuk makan sup adalah?", a:"SENDOK", options:["SENDOK","SEPATU","PENSIL","BOLA"], icon:"🥄"},
+        {q:"Kita menyikat gigi dengan?", a:"SIKAT GIGI", options:["SIKAT GIGI","SAPU","PIRING","KUNCI"], icon:"🪥"},
+        {q:"Tempat ikan hidup adalah?", a:"AIR", options:["AIR","PASIR","KERTAS","API"], icon:"🐟"},
+        {q:"Buah yang berwarna merah dan bulat adalah?", a:"APEL", options:["APEL","BUKU","SEPATU","SENDOK"], icon:"🍎"}
+      ];
+
+      const target = pickUnique("quiz-question", questions, q => q.q);
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = target.icon;
+
+      const q = document.createElement("div");
+      q.className = "small-clue";
+      q.textContent = target.q;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      target.options.sort(()=>Math.random()-.5).forEach(ans=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#E4C1F9)";
+        btn.textContent = ans;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+          if(ans === target.a){
+            sound("good");
+            addScore(12);
+            state.collected++;
+            message.textContent = "Jawaban benar! Kamu pintar! 🧠";
+            updateHud();
+            if(state.collected >= state.target){
+              winLevel(makeQuizRound);
+            }else{
+              setTimeout(makeQuizRound,800);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Belum tepat, coba pertanyaan lain ya.")) setTimeout(makeQuizRound,900);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(q);
+      box.appendChild(options);
+      updateHud();
+    }
+
+
+    /* =======================
+       GAME 10: HITUNG GAMBAR
+    ======================== */
+    function startCountGame(){
+      setTitle("🍎 Hitung Gambar", "Hitung gambar yang muncul, lalu pilih angka yang benar.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true};
+      makeCountRound();
+    }
+
+    function makeCountRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const emojis = ["🍎","⭐","🐟","🎈","🍓","🚗","🌸","🐱"];
+      const maxCount = Math.min(15, 4 + state.level * 2);
+      const countData = makeUniqueGenerated(
+        "count-question",
+        () => ({
+          emoji: emojis[Math.floor(Math.random()*emojis.length)],
+          count: Math.floor(Math.random()*maxCount) + 1
+        }),
+        q => q.emoji + "-" + q.count
+      );
+      const emoji = countData.emoji;
+      const count = countData.count;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Ada berapa gambar ini?";
+
+      const pictureBox = document.createElement("div");
+      pictureBox.style.maxWidth = "780px";
+      pictureBox.style.margin = "16px auto";
+      pictureBox.style.padding = "18px";
+      pictureBox.style.borderRadius = "28px";
+      pictureBox.style.background = "#fff";
+      pictureBox.style.boxShadow = "inset 0 0 0 4px rgba(36,52,71,.06)";
+      pictureBox.style.fontSize = "44px";
+      pictureBox.style.lineHeight = "1.45";
+      pictureBox.textContent = Array(count).fill(emoji).join(" ");
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      const answers = new Set([count]);
+      while(answers.size < 4){
+        const fake = count + Math.floor(Math.random()*7) - 3;
+        if(fake > 0 && fake <= 18) answers.add(fake);
+      }
+
+      [...answers].sort(()=>Math.random()-.5).forEach(num=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#FFE066)";
+        btn.textContent = num;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(num === count){
+            sound("good");
+            addScore(10);
+            state.collected++;
+            message.textContent = "Betul! Hitungan kamu tepat ✅";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeCountRound);
+            }else{
+              setTimeout(makeCountRound,700);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Oops, jumlahnya belum tepat.")) setTimeout(makeCountRound,800);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(clue);
+      box.appendChild(pictureBox);
+      box.appendChild(options);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 11: BELAJAR ENGLISH
+    ======================== */
+    function startEnglishGame(){
+      setTitle("🇬🇧 Belajar English", "Cocokkan kata Indonesia dengan bahasa Inggrisnya.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true};
+      makeEnglishRound();
+    }
+
+    function makeEnglishRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const words = [
+        {id:"APEL", en:"APPLE", icon:"🍎"},
+        {id:"KUCING", en:"CAT", icon:"🐱"},
+        {id:"ANJING", en:"DOG", icon:"🐶"},
+        {id:"IKAN", en:"FISH", icon:"🐟"},
+        {id:"BUKU", en:"BOOK", icon:"📚"},
+        {id:"MOBIL", en:"CAR", icon:"🚗"},
+        {id:"BOLA", en:"BALL", icon:"⚽"},
+        {id:"RUMAH", en:"HOUSE", icon:"🏠"},
+        {id:"MATAHARI", en:"SUN", icon:"☀️"},
+        {id:"BUNGA", en:"FLOWER", icon:"🌸"},
+        {id:"AIR", en:"WATER", icon:"💧"},
+        {id:"SUSU", en:"MILK", icon:"🥛"},
+        {id:"SEPATU", en:"SHOES", icon:"👟"},
+        {id:"PENSIL", en:"PENCIL", icon:"✏️"},
+        {id:"KURSI", en:"CHAIR", icon:"🪑"},
+        {id:"MEJA", en:"TABLE", icon:"🪑"},
+        {id:"PINTU", en:"DOOR", icon:"🚪"},
+        {id:"JENDELA", en:"WINDOW", icon:"🪟"},
+        {id:"HUJAN", en:"RAIN", icon:"🌧️"},
+        {id:"BINTANG", en:"STAR", icon:"⭐"},
+        {id:"ROTI", en:"BREAD", icon:"🍞"}
+      ];
+
+      const target = pickUnique("english-target", words, w => w.id);
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = target.icon;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.innerHTML = `Bahasa Inggris dari <b>${target.id}</b> adalah...`;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      let totalOption = Math.min(6, 3 + state.level);
+      let choices = [...words].sort(()=>Math.random()-.5).slice(0,totalOption);
+      if(!choices.some(w=>w.en === target.en)) choices[0] = target;
+      choices.sort(()=>Math.random()-.5);
+
+      choices.forEach(w=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#BDE0FE)";
+        btn.textContent = w.en;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(w.en === target.en){
+            sound("good");
+            addScore(12);
+            state.collected++;
+            message.textContent = `Benar! ${target.id} = ${target.en}`;
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeEnglishRound);
+            }else{
+              setTimeout(makeEnglishRound,850);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Belum tepat, coba kata berikutnya ya.")) setTimeout(makeEnglishRound,900);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(options);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 12: URUTKAN ANGKA
+    ======================== */
+    function startOrderGame(){
+      setTitle("🔢 Urutkan Angka", "Klik angka dari yang paling kecil sampai paling besar.");
+      state = {level:1, score:0, lives:3, collected:0, target:5, running:true};
+      makeOrderRound();
+    }
+
+    function makeOrderRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const amount = Math.min(9, 4 + state.level);
+      const maxNum = 10 + state.level * 10;
+      const orderData = makeUniqueGenerated(
+        "order-question",
+        () => {
+          const nums = new Set();
+          while(nums.size < amount){
+            nums.add(Math.floor(Math.random()*maxNum) + 1);
+          }
+          return [...nums].sort((a,b)=>a-b);
+        },
+        arr => arr.join("-")
+      );
+
+      const sorted = orderData;
+      let index = 0;
+      state.target = amount;
+      state.collected = 0;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Klik angka dari yang terkecil:";
+
+      const answer = document.createElement("div");
+      answer.className = "answer-row";
+      answer.style.minHeight = "72px";
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      [...sorted].sort(()=>Math.random()-.5).forEach(num=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#D0F4DE)";
+        btn.textContent = num;
+        btn.onclick = ()=>{
+          if(!state.running || btn.disabled) return;
+
+          if(num === sorted[index]){
+            sound("good");
+            btn.disabled = true;
+            btn.style.opacity = ".35";
+
+            const slot = document.createElement("div");
+            slot.className = "slot";
+            slot.textContent = num;
+            answer.appendChild(slot);
+
+            index++;
+            state.collected++;
+            addScore(8);
+            message.textContent = "Benar, lanjut angka berikutnya!";
+            updateHud();
+
+            if(index >= sorted.length){
+              winLevel(makeOrderRound);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            loseLife("Oops, cari angka yang lebih kecil dulu.");
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(clue);
+      box.appendChild(answer);
+      box.appendChild(options);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 13: TANGKAP TIKUS
+    ======================== */
+    function startMoleGame(){
+      setTitle("🐹 Tangkap Tikus", "Klik tikus yang muncul dari lubang. Jangan sampai kabur!");
+      state = {level:1, score:0, lives:3, collected:0, target:8, running:true};
+      makeMoleBoard();
+    }
+
+    function makeMoleBoard(){
+      gameContainer.innerHTML = "";
+      const area = document.createElement("div");
+      area.className = "center-game";
+      gameContainer.appendChild(area);
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Klik tikus yang muncul!";
+      area.appendChild(clue);
+
+      const grid = document.createElement("div");
+      grid.style.display = "grid";
+      grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+      grid.style.gap = "18px";
+      grid.style.maxWidth = "650px";
+      grid.style.margin = "20px auto";
+      area.appendChild(grid);
+
+      let holes = [];
+      for(let i=0;i<9;i++){
+        const hole = document.createElement("button");
+        hole.className = "option-btn";
+        hole.style.minHeight = "110px";
+        hole.style.background = "linear-gradient(135deg,#6B4F35,#A47551)";
+        hole.style.borderRadius = "50%";
+        hole.style.fontSize = "48px";
+        hole.textContent = "";
+        grid.appendChild(hole);
+        holes.push(hole);
+      }
+
+      function showMole(){
+        if(!state.running) return;
+
+        holes.forEach(h=>{
+          h.textContent = "";
+          h.disabled = false;
+          h.style.opacity = "1";
+          h.onclick = ()=>{
+            if(state.running){
+              showMiss("Miss! Klik tikus yang muncul ya.", "Yah miss");
+            }
+          };
+        });
+
+        const hole = holes[Math.floor(Math.random()*holes.length)];
+        hole.textContent = "🐹";
+        hole.onclick = ()=>{
+          if(!state.running) return;
+          sound("good");
+          hole.textContent = "✨";
+          hole.disabled = true;
+          addScore(10);
+          state.collected++;
+          message.textContent = "Tikus tertangkap! 🐹";
+          updateHud();
+
+          if(state.collected >= state.target){
+            winLevel(makeMoleBoard);
+          }
+        };
+
+        const speed = Math.max(500, 1300 - state.level * 120);
+        setTimeout(()=>{
+          if(state.running && hole.textContent === "🐹"){
+            hole.textContent = "";
+            hole.onclick = ()=>{
+              if(state.running){
+                showMiss("Miss! Klik tikus yang muncul ya.", "Yah miss");
+              }
+            };
+          }
+        }, speed);
+      }
+
+      function moleLoop(){
+        if(!state.running || currentGame !== "mole") return;
+        showMole();
+        setTimeout(moleLoop, Math.max(650, 1500-state.level*130));
+      }
+
+      updateHud();
+      moleLoop();
+    }
+
+    /* =======================
+       GAME 14: IKUTI POLA
+    ======================== */
+    function startSimonGame(){
+      setTitle("🎵 Ikuti Pola", "Ingat urutan warna, lalu klik kembali dengan urutan yang sama.");
+      state = {level:1, score:0, lives:3, collected:0, target:5, running:true};
+      makeSimonRound();
+    }
+
+    function makeSimonRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const colors = [
+        {name:"merah", hex:"#FF4D6D", emoji:"🔴"},
+        {name:"biru", hex:"#4D96FF", emoji:"🔵"},
+        {name:"kuning", hex:"#FFD93D", emoji:"🟡"},
+        {name:"hijau", hex:"#6BCB77", emoji:"🟢"}
+      ];
+
+      const length = Math.min(8, 2 + state.level);
+      const sequence = [];
+      for(let i=0;i<length;i++){
+        sequence.push(Math.floor(Math.random()*colors.length));
+      }
+
+      let input = [];
+      state.target = length;
+      state.collected = 0;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Perhatikan pola warna...";
+
+      const display = document.createElement("div");
+      display.className = "big-question";
+      display.style.minHeight = "110px";
+      display.textContent = "👀";
+
+      const grid = document.createElement("div");
+      grid.style.display = "grid";
+      grid.style.gridTemplateColumns = "repeat(2, minmax(120px, 220px))";
+      grid.style.justifyContent = "center";
+      grid.style.gap = "16px";
+      grid.style.marginTop = "20px";
+
+      const buttons = colors.map((c,idx)=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn color";
+        btn.style.background = c.hex;
+        btn.textContent = c.emoji;
+        btn.style.fontSize = "42px";
+        btn.disabled = true;
+        btn.onclick = ()=>{
+          if(!state.running || btn.disabled) return;
+
+          input.push(idx);
+          state.collected = input.length;
+          updateHud();
+
+          if(idx === sequence[input.length-1]){
+            sound("good");
+            btn.style.transform = "scale(.92)";
+            setTimeout(()=>btn.style.transform = "",120);
+
+            if(input.length === sequence.length){
+              addScore(15 + state.level);
+              message.textContent = "Pola benar! Memori kamu hebat 🎉";
+              winLevel(makeSimonRound);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            buttons.forEach(b=>b.disabled = true);
+            if(!loseLife("Oops, urutannya belum tepat.")){
+              setTimeout(makeSimonRound,900);
+            }
+          }
+        };
+        grid.appendChild(btn);
+        return btn;
+      });
+
+      box.appendChild(clue);
+      box.appendChild(display);
+      box.appendChild(grid);
+      updateHud();
+
+      async function playSequence(){
+        buttons.forEach(b=>b.disabled = true);
+        message.textContent = "Ingat urutannya ya...";
+        for(let i=0;i<sequence.length;i++){
+          const idx = sequence[i];
+          const c = colors[idx];
+          display.textContent = c.emoji;
+          buttons[idx].style.filter = "brightness(1.45)";
+          sound("good");
+          await new Promise(r=>setTimeout(r, 520));
+          buttons[idx].style.filter = "";
+          display.textContent = "✨";
+          await new Promise(r=>setTimeout(r, 180));
+        }
+        display.textContent = "Sekarang klik polanya!";
+        message.textContent = "Giliran kamu mengulang pola.";
+        buttons.forEach(b=>b.disabled = false);
+      }
+
+      playSequence();
+    }
+
+
+
+    /* =======================
+       GAME 15: CARI YANG BEDA
+    ======================== */
+    function startOddGame(){
+      setTitle("👀 Cari yang Beda", "Cari satu gambar yang berbeda di antara banyak gambar yang sama.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true};
+      makeOddRound();
+    }
+
+    function makeOddRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const sets = [
+        ["🍎","🍅"], ["🐱","🐶"], ["⭐","🌟"], ["🌸","🌼"],
+        ["🚗","🚕"], ["🍌","🌽"], ["🐟","🐬"], ["🎈","🎀"],
+        ["😀","😎"], ["⚽","🏀"], ["🍩","🍪"], ["🟦","🟩"], ["🐝","🦋"], ["🚀","✈️"],
+        ["🍕","🍔"], ["🌙","☀️"], ["📚","📦"], ["🎵","🎲"]
+      ];
+
+      const pair = pickUnique("odd-pair", sets, p => p[0] + "-" + p[1]);
+      const normal = pair[0];
+      const odd = pair[1];
+      const total = Math.min(30, 9 + state.level * 3);
+      const oddIndex = Math.floor(Math.random()*total);
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Klik gambar yang berbeda:";
+
+      const grid = document.createElement("div");
+      grid.style.display = "grid";
+      grid.style.gridTemplateColumns = `repeat(${Math.min(6, 3 + state.level)}, 1fr)`;
+      grid.style.gap = "12px";
+      grid.style.maxWidth = "760px";
+      grid.style.margin = "20px auto";
+
+      for(let i=0;i<total;i++){
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.minHeight = "78px";
+        btn.style.fontSize = "38px";
+        btn.style.background = "linear-gradient(135deg,#fff,#FAD2E1)";
+        btn.textContent = i === oddIndex ? odd : normal;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(i === oddIndex){
+            sound("good");
+            addScore(10 + state.level);
+            state.collected++;
+            message.textContent = "Benar! Matamu teliti 👀";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeOddRound);
+            }else{
+              setTimeout(makeOddRound,650);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Oops, itu masih sama. Cari yang berbeda ya.")) setTimeout(makeOddRound,750);
+          }
+        };
+        grid.appendChild(btn);
+      }
+
+      box.appendChild(clue);
+      box.appendChild(grid);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 16: PILAH SAMPAH
+    ======================== */
+    function startTrashGame(){
+      setTitle("♻️ Pilah Sampah", "Pilih tempat sampah yang benar untuk setiap benda.");
+      state = {level:1, score:0, lives:3, collected:0, target:7, running:true};
+      makeTrashRound();
+    }
+
+    function makeTrashRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const items = [
+        {name:"Kulit Pisang", icon:"🍌", bin:"ORGANIK"},
+        {name:"Sisa Apel", icon:"🍎", bin:"ORGANIK"},
+        {name:"Daun Kering", icon:"🍂", bin:"ORGANIK"},
+        {name:"Botol Plastik", icon:"🧴", bin:"PLASTIK"},
+        {name:"Kantong Plastik", icon:"🛍️", bin:"PLASTIK"},
+        {name:"Gelas Plastik", icon:"🥤", bin:"PLASTIK"},
+        {name:"Koran", icon:"📰", bin:"KERTAS"},
+        {name:"Buku Bekas", icon:"📚", bin:"KERTAS"},
+        {name:"Kardus", icon:"📦", bin:"KERTAS"},
+        {name:"Kaleng", icon:"🥫", bin:"LOGAM"},
+        {name:"Sendok Besi", icon:"🥄", bin:"LOGAM"},
+        {name:"Ranting Pohon", icon:"🌿", bin:"ORGANIK"},
+        {name:"Sisa Sayur", icon:"🥬", bin:"ORGANIK"},
+        {name:"Botol Minum Plastik", icon:"🧃", bin:"PLASTIK"},
+        {name:"Bungkus Plastik", icon:"🍬", bin:"PLASTIK"},
+        {name:"Kertas Gambar", icon:"📄", bin:"KERTAS"},
+        {name:"Majalah Bekas", icon:"📖", bin:"KERTAS"},
+        {name:"Tutup Kaleng", icon:"⚙️", bin:"LOGAM"},
+        {name:"Panci Bekas", icon:"🍳", bin:"LOGAM"}
+      ];
+
+      const bins = [
+        {name:"ORGANIK", icon:"🌱", color:"#6BCB77"},
+        {name:"PLASTIK", icon:"🧴", color:"#4D96FF"},
+        {name:"KERTAS", icon:"📄", color:"#FFD93D"},
+        {name:"LOGAM", icon:"🥫", color:"#B983FF"}
+      ];
+
+      const item = pickUnique("trash-item", items, i => i.name);
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = item.icon;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = `Masukkan "${item.name}" ke tempat sampah yang benar.`;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      bins.forEach(bin=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn color";
+        btn.style.background = bin.color;
+        btn.innerHTML = `<div style="font-size:42px">${bin.icon}</div><div>${bin.name}</div>`;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(bin.name === item.bin){
+            sound("good");
+            addScore(12);
+            state.collected++;
+            message.textContent = "Benar! Kamu menjaga lingkungan ♻️";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeTrashRound);
+            }else{
+              setTimeout(makeTrashRound,800);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Belum tepat, coba pilah sampah berikutnya.")) setTimeout(makeTrashRound,900);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(options);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 17: TEBAK PROFESI
+    ======================== */
+    function startJobGame(){
+      setTitle("👩‍🏫 Tebak Profesi", "Baca petunjuk pekerjaan, lalu pilih profesi yang tepat.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true};
+      makeJobRound();
+    }
+
+    function makeJobRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const jobs = [
+        {name:"DOKTER", icon:"👩‍⚕️", clue:"Aku membantu orang sakit agar sehat kembali."},
+        {name:"GURU", icon:"👩‍🏫", clue:"Aku mengajar murid membaca, menulis, dan berhitung."},
+        {name:"POLISI", icon:"👮", clue:"Aku menjaga keamanan dan mengatur lalu lintas."},
+        {name:"KOKI", icon:"👨‍🍳", clue:"Aku memasak makanan yang enak."},
+        {name:"PEMADAM", icon:"👨‍🚒", clue:"Aku memadamkan api saat terjadi kebakaran."},
+        {name:"PILOT", icon:"👨‍✈️", clue:"Aku menerbangkan pesawat di langit."},
+        {name:"PETANI", icon:"🧑‍🌾", clue:"Aku menanam padi, sayur, dan buah."},
+        {name:"PENYANYI", icon:"🎤", clue:"Aku bernyanyi di panggung."},
+        {name:"PERAWAT", icon:"🧑‍⚕️", clue:"Aku membantu dokter merawat pasien."},
+        {name:"SOPIR", icon:"🧑‍✈️", clue:"Aku mengemudikan kendaraan."},
+        {name:"NELAYAN", icon:"🧑‍🌾", clue:"Aku mencari ikan di laut."},
+        {name:"PENJAHIT", icon:"🧵", clue:"Aku membuat dan memperbaiki pakaian."},
+        {name:"PELUKIS", icon:"🎨", clue:"Aku membuat gambar dengan cat dan kuas."},
+        {name:"MONTIR", icon:"🔧", clue:"Aku memperbaiki mobil atau motor."},
+        {name:"TENTARA", icon:"🪖", clue:"Aku menjaga negara."},
+        {name:"ARSIKTEK", icon:"📐", clue:"Aku merancang bangunan."}
+      ];
+
+      const target = pickUnique("job-target", jobs, j => j.name);
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = "❓";
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = target.clue;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      let totalOption = Math.min(6, 3 + state.level);
+      let choices = [...jobs].sort(()=>Math.random()-.5).slice(0,totalOption);
+      if(!choices.some(j=>j.name === target.name)) choices[0] = target;
+      choices.sort(()=>Math.random()-.5);
+
+      choices.forEach(job=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#D0F4DE)";
+        btn.innerHTML = `<div style="font-size:42px">${job.icon}</div><div>${job.name}</div>`;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(job.name === target.name){
+            sound("good");
+            addScore(12);
+            state.collected++;
+            message.textContent = `Benar! Itu profesi ${target.icon} ${target.name}`;
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeJobRound);
+            }else{
+              setTimeout(makeJobRound,850);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Belum tepat, baca petunjuknya lagi ya.")) setTimeout(makeJobRound,900);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(options);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 18: LABIRIN BINTANG
+    ======================== */
+    function startMazeGame(){
+      setTitle("🧭 Labirin Bintang", "Gunakan tombol panah atau WASD. Ambil semua bintang, lalu menuju pintu keluar.");
+      state = {level:1, score:0, lives:3, collected:0, target:3, running:true};
+      makeMazeLevel();
+    }
+
+    function makeMazeLevel(){
+      gameContainer.innerHTML = "";
+      message.textContent = "Ambil semua bintang, lalu cari pintu keluar 🚪";
+
+      const canvas = document.createElement("canvas");
+      canvas.width = 900;
+      canvas.height = 540;
+      gameContainer.appendChild(canvas);
+      const ctx = canvas.getContext("2d");
+
+      const rows = 9;
+      const cols = 15;
+      const cell = 54;
+
+      let player = {r:0,c:0};
+      let exit = {r:rows-1,c:cols-1};
+      let stars = [];
+      state.target = Math.min(6, 2 + state.level);
+      state.collected = 0;
+
+      function key(r,c){return r + "," + c}
+
+      function generate(){
+        let walls;
+        let attempts = 0;
+
+        while(true){
+          attempts++;
+          walls = new Set();
+
+          for(let r=0;r<rows;r++){
+            for(let c=0;c<cols;c++){
+              if((r===0 && c===0) || (r===exit.r && c===exit.c)) continue;
+              if(Math.random() < Math.min(.28, .12 + state.level*.025)){
+                walls.add(key(r,c));
+              }
+            }
+          }
+
+          // buat jalur dasar supaya pasti bisa sampai
+          for(let c=0;c<cols;c++) walls.delete(key(0,c));
+          for(let r=0;r<rows;r++) walls.delete(key(r,cols-1));
+
+          if(attempts > 10) break;
+          break;
+        }
+
+        stars = [];
+        let safeCells = [];
+        for(let r=0;r<rows;r++){
+          for(let c=0;c<cols;c++){
+            if(!walls.has(key(r,c)) && !(r===0 && c===0) && !(r===exit.r && c===exit.c)){
+              safeCells.push({r,c});
+            }
+          }
+        }
+
+        safeCells.sort(()=>Math.random()-.5);
+        stars = safeCells.slice(0,state.target);
+
+        return walls;
+      }
+
+      let walls = generate();
+
+      function draw(){
+        ctx.clearRect(0,0,900,540);
+
+        let grd = ctx.createLinearGradient(0,0,0,540);
+        grd.addColorStop(0,"#DFF6FF");
+        grd.addColorStop(1,"#FFF6C8");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0,0,900,540);
+
+        for(let r=0;r<rows;r++){
+          for(let c=0;c<cols;c++){
+            const x = c*cell + 45;
+            const y = r*cell + 25;
+
+            ctx.fillStyle = "#fff";
+            ctx.beginPath();
+            ctx.roundRect(x,y,cell-7,cell-7,12);
+            ctx.fill();
+
+            if(walls.has(key(r,c))){
+              ctx.fillStyle = "#6B4F35";
+              ctx.beginPath();
+              ctx.roundRect(x,y,cell-7,cell-7,12);
+              ctx.fill();
+              ctx.font = "25px Comic Sans MS";
+              ctx.fillText("🧱", x+10, y+34);
+            }
+          }
+        }
+
+        ctx.font = "35px Comic Sans MS";
+        ctx.fillText("🚪", exit.c*cell+57, exit.r*cell+62);
+
+        stars.forEach(s=>{
+          ctx.font = "31px Comic Sans MS";
+          ctx.fillText("⭐", s.c*cell+55, s.r*cell+60);
+        });
+
+        ctx.font = "37px Comic Sans MS";
+        ctx.fillText("🦊", player.c*cell+53, player.r*cell+62);
+      }
+
+      function move(dr,dc){
+        if(!state.running) return;
+
+        const nr = player.r + dr;
+        const nc = player.c + dc;
+
+        if(nr<0 || nr>=rows || nc<0 || nc>=cols || walls.has(key(nr,nc))){
+          loseLife("Aduh, menabrak tembok!", "Yah menabrak tembok");
+          draw();
+          return;
+        }
+
+        player.r = nr;
+        player.c = nc;
+
+        for(let i=stars.length-1;i>=0;i--){
+          if(stars[i].r === player.r && stars[i].c === player.c){
+            stars.splice(i,1);
+            sound("good");
+            addScore(15);
+            state.collected++;
+            message.textContent = "Bintang labirin didapat! ⭐";
+            updateHud();
+          }
+        }
+
+        if(player.r === exit.r && player.c === exit.c){
+          if(state.collected >= state.target){
+            winLevel(makeMazeLevel);
+          }else{
+            message.textContent = "Ambil semua bintang dulu sebelum keluar ya!";
+          }
+        }
+
+        draw();
+      }
+
+      document.onkeydown = e=>{
+        if(e.key === "ArrowUp" || e.key === "w" || e.key === "W") move(-1,0);
+        if(e.key === "ArrowDown" || e.key === "s" || e.key === "S") move(1,0);
+        if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A") move(0,-1);
+        if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") move(0,1);
+      };
+
+      canvas.addEventListener("click", e=>{
+        const rect = canvas.getBoundingClientRect();
+        const x = ((e.clientX-rect.left)/rect.width)*canvas.width;
+        const y = ((e.clientY-rect.top)/rect.height)*canvas.height;
+        const pcx = player.c*cell + 72;
+        const pcy = player.r*cell + 52;
+        const dx = x - pcx;
+        const dy = y - pcy;
+        if(Math.abs(dx) > Math.abs(dy)){
+          move(0, dx>0 ? 1 : -1);
+        }else{
+          move(dy>0 ? 1 : -1, 0);
+        }
+      });
+
+      updateHud();
+      draw();
+    }
+
+    /* =======================
+       GAME 19: TEBAK CUACA
+    ======================== */
+    function startWeatherGame(){
+      setTitle("🌦️ Tebak Cuaca", "Cocokkan ikon cuaca dengan nama cuaca yang benar.");
+      state = {level:1, score:0, lives:3, collected:0, target:7, running:true};
+      makeWeatherRound();
+    }
+
+    function makeWeatherRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const weathers = [
+        {name:"CERAH", icon:"☀️"},
+        {name:"HUJAN", icon:"🌧️"},
+        {name:"BERAWAN", icon:"☁️"},
+        {name:"PELANGI", icon:"🌈"},
+        {name:"BADAI", icon:"⛈️"},
+        {name:"SALJU", icon:"❄️"},
+        {name:"BERANGIN", icon:"💨"},
+        {name:"MENDUNG", icon:"🌥️"},
+        {name:"KABUT", icon:"🌫️"},
+        {name:"PANAS", icon:"🥵"},
+        {name:"DINGIN", icon:"🥶"},
+        {name:"GERIMIS", icon:"🌦️"},
+        {name:"MALAM", icon:"🌙"}
+      ];
+
+      const target = pickUnique("weather-target", weathers, w => w.name);
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = target.icon;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Cuaca apakah ini?";
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      let totalOption = Math.min(6, 3 + state.level);
+      let choices = [...weathers].sort(()=>Math.random()-.5).slice(0,totalOption);
+      if(!choices.some(w=>w.name === target.name)) choices[0] = target;
+      choices.sort(()=>Math.random()-.5);
+
+      choices.forEach(w=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#BDE0FE)";
+        btn.textContent = w.name;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(w.name === target.name){
+            sound("good");
+            addScore(10);
+            state.collected++;
+            message.textContent = "Benar! Kamu mengenal cuaca 🌦️";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeWeatherRound);
+            }else{
+              setTimeout(makeWeatherRound,750);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Belum tepat, lihat ikonnya lagi ya.")) setTimeout(makeWeatherRound,850);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(options);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 20: BELAJAR JAM
+    ======================== */
+    function startClockGame(){
+      setTitle("🕒 Belajar Jam", "Lihat jam analog sederhana, lalu pilih pukul berapa.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true};
+      makeClockRound();
+    }
+
+    function makeClockRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const minuteOptions = state.level >= 3 ? [0, 30] : [0];
+      const timeData = makeUniqueGenerated(
+        "clock-question",
+        () => {
+          const hour = Math.floor(Math.random()*12) + 1;
+          const minute = minuteOptions[Math.floor(Math.random()*minuteOptions.length)];
+          return {hour, minute};
+        },
+        t => `${t.hour}:${t.minute}`
+      );
+      const hour = timeData.hour;
+      const minute = timeData.minute;
+      const answer = minute === 0 ? `${hour}:00` : `${hour}:30`;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Jam menunjukkan pukul berapa?";
+
+      const canvas = document.createElement("canvas");
+      canvas.width = 360;
+      canvas.height = 360;
+      canvas.style.maxWidth = "360px";
+      canvas.style.margin = "0 auto";
+      canvas.style.background = "#fff";
+      canvas.style.borderRadius = "50%";
+      box.appendChild(clue);
+      box.appendChild(canvas);
+
+      const ctx = canvas.getContext("2d");
+      const cx = 180;
+      const cy = 180;
+      const r = 140;
+
+      function drawClock(){
+        ctx.clearRect(0,0,360,360);
+        ctx.fillStyle = "#fff";
+        ctx.beginPath();
+        ctx.arc(cx,cy,r,0,Math.PI*2);
+        ctx.fill();
+        ctx.lineWidth = 8;
+        ctx.strokeStyle = "#4D96FF";
+        ctx.stroke();
+
+        ctx.fillStyle = "#243447";
+        ctx.font = "22px Comic Sans MS";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        for(let n=1;n<=12;n++){
+          const angle = (n-3) * Math.PI/6;
+          const x = cx + Math.cos(angle)*(r-28);
+          const y = cy + Math.sin(angle)*(r-28);
+          ctx.fillText(n,x,y);
+        }
+
+        const minuteAngle = (minute/60)*Math.PI*2 - Math.PI/2;
+        const hourAngle = ((hour%12 + minute/60)/12)*Math.PI*2 - Math.PI/2;
+
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "#FF4D6D";
+        ctx.lineWidth = 10;
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.lineTo(cx + Math.cos(hourAngle)*70, cy + Math.sin(hourAngle)*70);
+        ctx.stroke();
+
+        ctx.strokeStyle = "#6BCB77";
+        ctx.lineWidth = 7;
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.lineTo(cx + Math.cos(minuteAngle)*105, cy + Math.sin(minuteAngle)*105);
+        ctx.stroke();
+
+        ctx.fillStyle = "#FFD93D";
+        ctx.beginPath();
+        ctx.arc(cx,cy,12,0,Math.PI*2);
+        ctx.fill();
+      }
+
+      drawClock();
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+      options.style.marginTop = "22px";
+
+      const answers = new Set([answer]);
+      while(answers.size < 4){
+        const h = Math.floor(Math.random()*12)+1;
+        const m = minuteOptions[Math.floor(Math.random()*minuteOptions.length)];
+        answers.add(m === 0 ? `${h}:00` : `${h}:30`);
+      }
+
+      [...answers].sort(()=>Math.random()-.5).forEach(ans=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#FFE066)";
+        btn.textContent = ans;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(ans === answer){
+            sound("good");
+            addScore(12);
+            state.collected++;
+            message.textContent = "Benar! Kamu pandai membaca jam 🕒";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeClockRound);
+            }else{
+              setTimeout(makeClockRound,800);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Belum tepat, lihat jarum jamnya lagi.")) setTimeout(makeClockRound,900);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(options);
+      updateHud();
+    }
+
+
+
+    /* =======================
+       GAME 21: ROKET RINTANGAN
+    ======================== */
+    function startRocketGame(){
+      setTitle("🚀 Roket Rintangan", "Game lebih menantang: ambil bintang, hindari meteor, dan bertahan selama mungkin.");
+      state = {level:1, score:0, lives:3, collected:0, target:8, running:true};
+
+      const canvas = document.createElement("canvas");
+      canvas.width = 1000;
+      canvas.height = 520;
+      gameContainer.appendChild(canvas);
+      const ctx = canvas.getContext("2d");
+
+      let rocket = {x:500, y:430, w:58, h:76, vx:0};
+      let stars = [];
+      let meteors = [];
+      let frame = 0;
+      let keys = {};
+
+      document.onkeydown = e => keys[e.key] = true;
+      document.onkeyup = e => keys[e.key] = false;
+
+      canvas.addEventListener("mousemove", e=>{
+        const r = canvas.getBoundingClientRect();
+        rocket.x = ((e.clientX-r.left)/r.width)*canvas.width;
+      });
+
+      canvas.addEventListener("touchmove", e=>{
+        e.preventDefault();
+        const r = canvas.getBoundingClientRect();
+        rocket.x = ((e.touches[0].clientX-r.left)/r.width)*canvas.width;
+      }, {passive:false});
+
+      function spawnStar(){
+        stars.push({
+          x:40 + Math.random()*920,
+          y:-40,
+          s:24,
+          speed:3 + state.level*.55 + Math.random()*1.5
+        });
+      }
+
+      function spawnMeteor(){
+        meteors.push({
+          x:50 + Math.random()*900,
+          y:-60,
+          r:22 + Math.random()*18,
+          speed:3.5 + state.level*.8 + Math.random()*2.5,
+          drift:(Math.random()-.5)*(2+state.level*.25)
+        });
+      }
+
+      function hitCircleRect(cx,cy,cr,rx,ry,rw,rh){
+        const tx = Math.max(rx, Math.min(cx, rx+rw));
+        const ty = Math.max(ry, Math.min(cy, ry+rh));
+        return Math.hypot(cx-tx, cy-ty) < cr;
+      }
+
+      function draw(){
+        ctx.clearRect(0,0,1000,520);
+
+        const grd = ctx.createLinearGradient(0,0,0,520);
+        grd.addColorStop(0,"#1B2A6B");
+        grd.addColorStop(.65,"#6A4C93");
+        grd.addColorStop(1,"#FFB3C7");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0,0,1000,520);
+
+        ctx.fillStyle = "rgba(255,255,255,.8)";
+        for(let i=0;i<55;i++){
+          const x = (i*173 + frame*0.6) % 1000;
+          const y = (i*79) % 430;
+          ctx.beginPath();
+          ctx.arc(x,y, i%3+1,0,Math.PI*2);
+          ctx.fill();
+        }
+
+        // rocket
+        ctx.font = "68px Comic Sans MS";
+        ctx.fillText("🚀", rocket.x-35, rocket.y+55);
+
+        stars.forEach(st=>{
+          ctx.font = "34px Comic Sans MS";
+          ctx.fillText("⭐", st.x-18, st.y+14);
+        });
+
+        meteors.forEach(m=>{
+          ctx.font = "48px Comic Sans MS";
+          ctx.fillText("☄️", m.x-25, m.y+20);
+        });
+      }
+
+      function loop(){
+        if(!state.running) return;
+        frame++;
+
+        if(keys.ArrowLeft || keys.a || keys.A) rocket.x -= 10;
+        if(keys.ArrowRight || keys.d || keys.D) rocket.x += 10;
+        rocket.x = Math.max(40, Math.min(960, rocket.x));
+
+        if(frame % Math.max(22, 62 - state.level*6) === 0) spawnStar();
+        if(frame % Math.max(18, 58 - state.level*5) === 0) spawnMeteor();
+
+        for(let i=stars.length-1;i>=0;i--){
+          const st = stars[i];
+          st.y += st.speed;
+          if(hitCircleRect(st.x,st.y,st.s,rocket.x-30,rocket.y,60,70)){
+            sound("good");
+            addScore(12);
+            state.collected++;
+            message.textContent = "Bintang luar angkasa didapat! ⭐";
+            stars.splice(i,1);
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(()=>{
+                stars = [];
+                meteors = [];
+              });
+            }
+          }else if(st.y > 550){
+            stars.splice(i,1);
+          }
+        }
+
+        for(let i=meteors.length-1;i>=0;i--){
+          const m = meteors[i];
+          m.y += m.speed;
+          m.x += m.drift;
+          if(hitCircleRect(m.x,m.y,m.r,rocket.x-28,rocket.y,56,70)){
+            meteors.splice(i,1);
+            if(loseLife("Roket terkena meteor! ☄️", "Yah terkena meteor")) return;
+          }else if(m.y > 570){
+            meteors.splice(i,1);
+          }
+        }
+
+        draw();
+        loopId = requestAnimationFrame(loop);
+      }
+
+      message.textContent = "Gerakkan roket dengan mouse atau tombol panah!";
+      updateHud();
+      loop();
+    }
+
+    /* =======================
+       GAME 22: KUIS JAWAB SUARA
+    ======================== */
+    function startVoiceQuizGame(){
+      setTitle("🎙️ Kuis Jawab Suara", "Tekan mikrofon, lalu jawab dengan suara. Browser akan mencoba mendeteksi jawabanmu.");
+      state = {level:1, score:0, lives:3, collected:0, target:5, running:true};
+      makeVoiceQuizRound();
+    }
+
+    function normalizeSpeech(t){
+      return (t || "")
+        .toLowerCase()
+        .replaceAll("nol","0")
+        .replaceAll("satu","1")
+        .replaceAll("dua","2")
+        .replaceAll("tiga","3")
+        .replaceAll("empat","4")
+        .replaceAll("lima","5")
+        .replaceAll("enam","6")
+        .replaceAll("tujuh","7")
+        .replaceAll("delapan","8")
+        .replaceAll("sembilan","9")
+        .replaceAll("sepuluh","10")
+        .replace(/[^\w\s]/g,"")
+        .trim();
+    }
+
+    function makeVoiceQuizRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const pool = [
+        {q:"Hewan yang suka mengeong adalah?", answers:["kucing","cat"], say:"Hewan yang suka mengeong adalah apa?"},
+        {q:"Warna daun biasanya?", answers:["hijau","green"], say:"Warna daun biasanya apa?"},
+        {q:"Benda untuk menulis adalah?", answers:["pensil","pena","pulpen"], say:"Benda untuk menulis adalah apa?"},
+        {q:"Lawan kata panas adalah?", answers:["dingin"], say:"Lawan kata panas adalah apa?"},
+        {q:"2 tambah 3 sama dengan?", answers:["5","lima"], say:"Dua tambah tiga sama dengan berapa?"},
+        {q:"3 tambah 4 sama dengan?", answers:["7","tujuh"], say:"Tiga tambah empat sama dengan berapa?"},
+        {q:"Hewan yang hidup di air dan berenang?", answers:["ikan","fish"], say:"Hewan yang hidup di air dan berenang adalah apa?"},
+        {q:"Kita melihat menggunakan?", answers:["mata"], say:"Kita melihat menggunakan apa?"},
+        {q:"Kita mendengar menggunakan?", answers:["telinga"], say:"Kita mendengar menggunakan apa?"},
+        {q:"Lawan kata besar adalah?", answers:["kecil"], say:"Lawan kata besar adalah apa?"},
+        {q:"Lawan kata siang adalah?", answers:["malam"], say:"Lawan kata siang adalah apa?"},
+        {q:"Warna langit cerah biasanya?", answers:["biru"], say:"Warna langit cerah biasanya apa?"},
+        {q:"1 tambah 4 sama dengan?", answers:["5","lima"], say:"Satu tambah empat sama dengan berapa?"},
+        {q:"5 dikurang 2 sama dengan?", answers:["3","tiga"], say:"Lima dikurang dua sama dengan berapa?"},
+        {q:"Buah yang disukai monyet?", answers:["pisang"], say:"Buah yang disukai monyet apa?"},
+        {q:"Benda yang dipakai saat hujan?", answers:["payung"], say:"Benda yang dipakai saat hujan apa?"},
+        {q:"Hewan yang menghasilkan susu?", answers:["sapi"], say:"Hewan yang menghasilkan susu apa?"},
+        {q:"Kita menulis menggunakan?", answers:["pensil","pena","pulpen"], say:"Kita menulis menggunakan apa?"},
+        {q:"Tempat tinggal kita disebut?", answers:["rumah"], say:"Tempat tinggal kita disebut apa?"}
+      ];
+
+      const target = pickUnique("voicequiz-question", pool, q => q.q);
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = "🎙️";
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = target.q;
+
+      const panel = document.createElement("div");
+      panel.className = "voice-panel";
+
+      const mic = document.createElement("button");
+      mic.className = "mic-btn";
+      mic.textContent = "🎙️ Jawab dengan suara";
+
+      const listenAgain = document.createElement("button");
+      listenAgain.className = "btn yellow";
+      listenAgain.style.marginLeft = "8px";
+      listenAgain.textContent = "🔊 Bacakan soal";
+
+      const input = document.createElement("input");
+      input.className = "typing-input";
+      input.placeholder = "Atau ketik jawaban di sini...";
+      input.type = "text";
+
+      const submit = document.createElement("button");
+      submit.className = "btn green";
+      submit.style.marginLeft = "8px";
+      submit.textContent = "✅ Cek";
+
+      const output = document.createElement("div");
+      output.className = "voice-output";
+      output.textContent = "Klik mikrofon, izinkan akses mic, lalu ucapkan jawaban.";
+
+      function checkAnswer(text){
+        const n = normalizeSpeech(text);
+        const ok = target.answers.some(a => n.includes(normalizeSpeech(a)));
+
+        output.textContent = `Terdeteksi: "${text || "-"}"`;
+
+        if(ok){
+          sound("good");
+          showBurst("correct", "✅ BENAR!", "Jawaban suaramu terdeteksi!");
+          addScore(15);
+          state.collected++;
+          message.textContent = "Jawaban suara benar! 🎙️";
+          updateHud();
+
+          if(state.collected >= state.target){
+            winLevel(makeVoiceQuizRound);
+          }else{
+            setTimeout(makeVoiceQuizRound,1000);
+          }
+        }else{
+          box.classList.add("shake");
+          setTimeout(()=>box.classList.remove("shake"),250);
+          if(!loseLife("Jawaban suara belum sesuai.")) setTimeout(makeVoiceQuizRound,1200);
+        }
+      }
+
+      mic.onclick = ()=>{
+        if(!state.running) return;
+        const rec = getSpeechRecognizer();
+
+        if(!rec){
+          output.textContent = "Browser ini belum mendukung deteksi suara. Pakai kolom ketik ya.";
+          showBurst("wrong", "🎙️ Mic belum support", "Gunakan input ketik sebagai pengganti.");
+          return;
+        }
+
+        mic.classList.add("listening");
+        mic.textContent = "🎧 Mendengarkan...";
+        output.textContent = "Mendengarkan jawabanmu...";
+
+        rec.onresult = e=>{
+          const text = e.results[0][0].transcript;
+          mic.classList.remove("listening");
+          mic.textContent = "🎙️ Jawab dengan suara";
+          checkAnswer(text);
+        };
+
+        rec.onerror = ()=>{
+          mic.classList.remove("listening");
+          mic.textContent = "🎙️ Jawab dengan suara";
+          output.textContent = "Suara belum terdengar jelas. Coba lagi atau ketik jawaban.";
+          showBurst("wrong", "😅 Coba lagi", "Suara belum jelas.");
+        };
+
+        rec.onend = ()=>{
+          mic.classList.remove("listening");
+          mic.textContent = "🎙️ Jawab dengan suara";
+        };
+
+        rec.start();
+      };
+
+      listenAgain.onclick = ()=>speakText("Semangat menjawab, " + getPlayerName() + ". " + target.say);
+
+      submit.onclick = ()=>{
+        if(input.value.trim()) checkAnswer(input.value.trim());
+      };
+
+      input.onkeydown = e=>{
+        if(e.key === "Enter" && input.value.trim()) checkAnswer(input.value.trim());
+      };
+
+      panel.appendChild(mic);
+      panel.appendChild(listenAgain);
+      panel.appendChild(document.createElement("br"));
+      panel.appendChild(input);
+      panel.appendChild(submit);
+      panel.appendChild(output);
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(panel);
+
+      speakText(target.say);
+      updateHud();
+    }
+
+    /* =======================
+       GAME 23: BACA KATA SUARA
+    ======================== */
+    function startReadWordGame(){
+      setTitle("📖 Baca Kata Suara", "Lihat gambar dan kata, lalu ucapkan jawabannya. Bisa juga diketik jika mikrofon tidak aktif.");
+      state = {level:1, score:0, lives:3, collected:0, target:5, running:true};
+      makeReadWordRound();
+    }
+
+    function makeReadWordRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const words = [
+        {word:"APEL", icon:"🍎", answers:["apel", "apple"]},
+        {word:"BOLA", icon:"⚽", answers:["bola", "ball"]},
+        {word:"BUKU", icon:"📚", answers:["buku", "book"]},
+        {word:"MOBIL", icon:"🚗", answers:["mobil", "car"]},
+        {word:"RUMAH", icon:"🏠", answers:["rumah", "house"]},
+        {word:"BUNGA", icon:"🌸", answers:["bunga", "flower"]},
+        {word:"IKAN", icon:"🐟", answers:["ikan", "fish"]},
+        {word:"MATA", icon:"👀", answers:["mata", "eye", "eyes"]},
+        {word:"SUSU", icon:"🥛", answers:["susu", "milk"]},
+        {word:"AIR", icon:"💧", answers:["air", "water"]},
+        {word:"ROTI", icon:"🍞", answers:["roti", "bread"]},
+        {word:"SEPATU", icon:"👟", answers:["sepatu", "shoes"]},
+        {word:"PENSIL", icon:"✏️", answers:["pensil", "pencil"]},
+        {word:"PINTU", icon:"🚪", answers:["pintu", "door"]},
+        {word:"JAM", icon:"🕒", answers:["jam", "clock"]},
+        {word:"HUJAN", icon:"🌧️", answers:["hujan", "rain"]},
+        {word:"BINTANG", icon:"⭐", answers:["bintang", "star"]},
+        {word:"KURSI", icon:"🪑", answers:["kursi", "chair"]},
+        {word:"PIRING", icon:"🍽️", answers:["piring", "plate"]}
+      ];
+
+      // Level 1 = 1 kata, Level 2 = 2 kata, Level 3 = 3 kata.
+      const wordCount = Math.min(3, Math.max(1, state.level || 1));
+
+      function buildWordGroups(list, size){
+        const groups = [];
+
+        function combine(startIndex, current){
+          if(current.length === size){
+            groups.push(current.slice());
+            return;
+          }
+
+          for(let i=startIndex; i<list.length; i++){
+            current.push(list[i]);
+            combine(i + 1, current);
+            current.pop();
+          }
+        }
+
+        combine(0, []);
+        return groups;
+      }
+
+      const groups = buildWordGroups(words, wordCount);
+      const targetGroup = pickUnique(
+        "readword-target-level-" + wordCount,
+        groups,
+        group => group.map(item => item.word).join("-")
+      );
+
+      const displayWords = targetGroup.map(item => item.word).join(" ");
+      const displayIcons = targetGroup.map(item => item.icon).join(" ");
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = displayIcons;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.innerHTML = `Sebutkan kata ini <br><span style="font-size:16px;opacity:.75">Level ${state.level}: ${wordCount} kata</span>`;
+
+      const wordBox = document.createElement("div");
+      wordBox.className = "big-question";
+      wordBox.style.fontSize = wordCount === 1 ? "clamp(46px,7vw,72px)" : "clamp(32px,5vw,56px)";
+      wordBox.style.color = "#4D96FF";
+      wordBox.style.lineHeight = "1.25";
+      wordBox.textContent = displayWords;
+
+      const panel = document.createElement("div");
+      panel.className = "voice-panel";
+
+      const speakBtn = document.createElement("button");
+      speakBtn.className = "btn yellow";
+      speakBtn.textContent = "🔊 Dengarkan perintah";
+
+      const mic = document.createElement("button");
+      mic.className = "mic-btn";
+      mic.style.marginLeft = "8px";
+      mic.textContent = "🎙️ Ucapkan kata";
+
+      const input = document.createElement("input");
+      input.className = "typing-input";
+      input.placeholder = wordCount === 1 ? "Atau ketik kata di sini..." : "Atau ketik semua kata di sini...";
+      input.type = "text";
+
+      const submit = document.createElement("button");
+      submit.className = "btn green";
+      submit.style.marginLeft = "8px";
+      submit.textContent = "✅ Cek";
+
+      const output = document.createElement("div");
+      output.className = "voice-output";
+      output.textContent = "Klik mikrofon, izinkan akses mic, lalu ucapkan kata yang muncul, " + getPlayerName() + ".";
+
+      function wordMatches(text, item){
+        const n = normalizeSpeech(text);
+        return item.answers.some(a => n.includes(normalizeSpeech(a))) || n.includes(normalizeSpeech(item.word));
+      }
+
+      function checkWord(text){
+        const ok = targetGroup.every(item => wordMatches(text, item));
+
+        output.textContent = `Terdeteksi: "${text || "-"}"`;
+
+        if(ok){
+          sound("good");
+          showBurst("correct", "✅ BENAR!", `Kamu berhasil membaca ${wordCount} kata!`);
+          addScore(18 + (wordCount * 4));
+          state.collected++;
+          message.textContent = "Bacaan suara benar! 📖";
+          updateHud();
+
+          if(state.collected >= state.target){
+            winLevel(makeReadWordRound);
+          }else{
+            setTimeout(makeReadWordRound,1100);
+          }
+        }else{
+          box.classList.add("shake");
+          setTimeout(()=>box.classList.remove("shake"),250);
+          if(!loseLife("Kata yang terdengar belum cocok.")) setTimeout(makeReadWordRound,1200);
+        }
+      }
+
+      // Suara perintah tidak menyebutkan jawaban/kata.
+      speakBtn.onclick = ()=>speakText("Sebutkan kata ini, " + getPlayerName());
+
+      mic.onclick = ()=>{
+        if(!state.running) return;
+        const rec = getSpeechRecognizer();
+
+        if(!rec){
+          output.textContent = "Browser belum mendukung deteksi suara. Pakai input ketik ya.";
+          showBurst("wrong", "🎙️ Mic belum support", "Gunakan input ketik sebagai pengganti.");
+          return;
+        }
+
+        mic.classList.add("listening");
+        mic.textContent = "🎧 Mendengarkan...";
+        output.textContent = "Mendengarkan kata yang kamu ucapkan...";
+
+        rec.onresult = e=>{
+          const text = e.results[0][0].transcript;
+          mic.classList.remove("listening");
+          mic.textContent = "🎙️ Ucapkan kata";
+          checkWord(text);
+        };
+
+        rec.onerror = ()=>{
+          mic.classList.remove("listening");
+          mic.textContent = "🎙️ Ucapkan kata";
+          output.textContent = "Suara belum terdengar jelas. Coba lagi atau ketik kata.";
+          showBurst("wrong", "😅 Coba lagi", "Suara belum jelas.");
+        };
+
+        rec.onend = ()=>{
+          mic.classList.remove("listening");
+          mic.textContent = "🎙️ Ucapkan kata";
+        };
+
+        rec.start();
+      };
+
+      submit.onclick = ()=>{
+        if(input.value.trim()) checkWord(input.value.trim());
+      };
+
+      input.onkeydown = e=>{
+        if(e.key === "Enter" && input.value.trim()) checkWord(input.value.trim());
+      };
+
+      panel.appendChild(speakBtn);
+      panel.appendChild(mic);
+      panel.appendChild(document.createElement("br"));
+      panel.appendChild(input);
+      panel.appendChild(submit);
+      panel.appendChild(output);
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(wordBox);
+      box.appendChild(panel);
+
+      speakText("Sebutkan kata ini, " + getPlayerName());
+      updateHud();
+    }
+
+
+
+
+    /* =======================
+       GAME 24: PETUALANGAN MISI BERBEDA
+       Setiap misi memakai gameplay berbeda agar tidak membosankan.
+    ======================== */
+    function startMissionGame(){
+      setTitle("🗺️ Petualangan Misi Berbeda", "Selesaikan misi satu per satu. Setiap misi berbeda: hitung, warna, angka, kata, labirin, suara, dan roket.");
+      state = {
+        level:1,
+        score:0,
+        lives:3,
+        collected:0,
+        target:10,
+        running:true,
+        missionIndex:0
+      };
+
+      state.missions = [
+        {name:"Misi 1: Hitung Bekal", type:"count", desc:"Hitung jumlah gambar yang muncul."},
+        {name:"Misi 2: Gerbang Warna", type:"color", desc:"Pilih warna yang sesuai dengan perintah."},
+        {name:"Misi 3: Jembatan Angka", type:"order", desc:"Klik angka dari yang terkecil."},
+        {name:"Misi 4: Mata Detektif", type:"odd", desc:"Cari gambar yang berbeda."},
+        {name:"Misi 5: Pahlawan Lingkungan", type:"trash", desc:"Pilah sampah ke tempat yang benar."},
+        {name:"Misi 6: Susun Kata Rahasia", type:"word", desc:"Susun huruf menjadi kata sesuai gambar."},
+        {name:"Misi 7: Tebak Pekerjaan", type:"job", desc:"Baca petunjuk dan pilih profesi."},
+        {name:"Misi 8: Labirin Mini", type:"maze", desc:"Ambil bintang lalu menuju pintu keluar."},
+        {name:"Misi 9: Jawab Suara", type:"voice", desc:"Jawab dengan suara atau ketik jawaban."},
+        {name:"Misi 10: Roket Final", type:"rocket", desc:"Ambil bintang dan hindari meteor."}
+      ];
+
+      state.target = state.missions.length;
+      updateMissionHud();
+      runCurrentMission();
+    }
+
+    function updateMissionHud(){
+      state.level = Math.min(state.missionIndex + 1, state.missions.length);
+      state.collected = state.missionIndex;
+      state.target = state.missions.length;
+      updateHud();
+    }
+
+    function missionBanner(mission){
+      const banner = document.createElement("div");
+      banner.className = "mission-banner";
+      banner.innerHTML = `${mission.name}<span class="mission-sub">${mission.desc}</span>`;
+      return banner;
+    }
+
+    function runCurrentMission(){
+      if(!state.running) return;
+
+      if(state.missionIndex >= state.missions.length){
+        finishAllMissions();
+        return;
+      }
+
+      updateMissionHud();
+      const mission = state.missions[state.missionIndex];
+      gameContainer.innerHTML = "";
+      message.textContent = "Selesaikan misi ini untuk membuka misi berikutnya.";
+
+      if(mission.type === "count") missionCount(mission);
+      if(mission.type === "color") missionColor(mission);
+      if(mission.type === "order") missionOrder(mission);
+      if(mission.type === "odd") missionOdd(mission);
+      if(mission.type === "trash") missionTrash(mission);
+      if(mission.type === "word") missionWord(mission);
+      if(mission.type === "job") missionJob(mission);
+      if(mission.type === "maze") missionMaze(mission);
+      if(mission.type === "voice") missionVoice(mission);
+      if(mission.type === "rocket") missionRocket(mission);
+    }
+
+    function completeMission(points=25, text="Misi selesai!"){
+      if(!state.running) return;
+
+      sound("win");
+      confetti();
+      showBurst("level", "✅ MISI SELESAI!", text);
+      addScore(points);
+
+      state.missionIndex++;
+      updateMissionHud();
+
+      if(state.missionIndex >= state.missions.length){
+        setTimeout(finishAllMissions, 1000);
+      }else{
+        const next = state.missions[state.missionIndex];
+        message.textContent = `Misi berikutnya: ${next.name}`;
+        setTimeout(runCurrentMission, 1100);
+      }
+    }
+
+    function failMission(text, voiceText="Yah kamu salah"){
+      if(loseLife(text, voiceText)) return true;
+      setTimeout(runCurrentMission, 900);
+      return false;
+    }
+
+    function finishAllMissions(){
+      state.running = false;
+      gameContainer.innerHTML = `
+        <div class="mission-complete-card">
+          <span class="big">🏆</span>
+          <div style="font-size:clamp(28px,5vw,52px)">SEMUA MISI SELESAI!</div>
+          <p style="font-size:20px;margin:10px 0 0">Kamu berhasil menyelesaikan petualangan dengan tantangan yang berbeda-beda.</p>
+        </div>
+      `;
+      message.textContent = "Keren! Tekan Ulang untuk memainkan petualangan dari awal.";
+      speakText("Hore kamu menang, " + getPlayerName());
+      showBurst("level", "🏆 MENANG!", "Semua misi berhasil diselesaikan!");
+      confetti();
+      updateMissionHud();
+    }
+
+    function missionBase(mission){
+      const box = document.createElement("div");
+      box.className = "center-game";
+      box.appendChild(missionBanner(mission));
+      gameContainer.appendChild(box);
+      return box;
+    }
+
+    // Misi 1: Hitung gambar
+    function missionCount(mission){
+      const box = missionBase(mission);
+      const emojis = ["🍎","⭐","🎈","🍓","🚗","🌸"];
+      const countData = makeUniqueGenerated(
+        "mission-count-question",
+        () => ({
+          emoji: emojis[Math.floor(Math.random()*emojis.length)],
+          count: 5 + Math.floor(Math.random()*7)
+        }),
+        q => q.emoji + "-" + q.count
+      );
+      const emoji = countData.emoji;
+      const count = countData.count;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Hitung jumlah gambar ini:";
+
+      const pictureBox = document.createElement("div");
+      pictureBox.style.maxWidth = "760px";
+      pictureBox.style.margin = "16px auto";
+      pictureBox.style.padding = "18px";
+      pictureBox.style.borderRadius = "28px";
+      pictureBox.style.background = "#fff";
+      pictureBox.style.fontSize = "44px";
+      pictureBox.style.lineHeight = "1.45";
+      pictureBox.textContent = Array(count).fill(emoji).join(" ");
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      const answers = new Set([count]);
+      while(answers.size < 4){
+        const fake = count + Math.floor(Math.random()*7) - 3;
+        if(fake > 0) answers.add(fake);
+      }
+
+      [...answers].sort(()=>Math.random()-.5).forEach(num=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#FFE066)";
+        btn.textContent = num;
+        btn.onclick = ()=>{
+          if(num === count){
+            showBurst("correct","🎯 TEPAT!","Hitungan kamu benar.");
+            completeMission(25, "Kamu berhasil menghitung bekal!");
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            failMission("Jumlahnya belum tepat.");
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(clue);
+      box.appendChild(pictureBox);
+      box.appendChild(options);
+    }
+
+    // Misi 2: Warna
+    function missionColor(mission){
+      const box = missionBase(mission);
+      const colors = [
+        {name:"MERAH", hex:"#FF4D6D"},
+        {name:"BIRU", hex:"#4D96FF"},
+        {name:"KUNING", hex:"#FFD93D"},
+        {name:"HIJAU", hex:"#6BCB77"},
+        {name:"UNGU", hex:"#B983FF"},
+        {name:"ORANYE", hex:"#FF9F1C"}
+      ];
+      const target = pickUnique("color-target", colors, c => c.name);
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Klik warna:";
+      const word = document.createElement("div");
+      word.className = "big-question";
+      word.textContent = target.name;
+      word.style.color = target.hex;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      colors.sort(()=>Math.random()-.5).forEach(c=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn color";
+        btn.style.background = c.hex;
+        btn.textContent = c.name;
+        btn.onclick = ()=>{
+          if(c.name === target.name){
+            showBurst("correct","🌈 BENAR!","Gerbang warna terbuka.");
+            completeMission(25, "Gerbang warna berhasil dibuka!");
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            failMission("Warna belum tepat.");
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(clue);
+      box.appendChild(word);
+      box.appendChild(options);
+    }
+
+    // Misi 3: Urutkan angka
+    function missionOrder(mission){
+      const box = missionBase(mission);
+      const nums = new Set();
+      while(nums.size < 5) nums.add(Math.floor(Math.random()*30)+1);
+      const sorted = [...nums].sort((a,b)=>a-b);
+      let index = 0;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Klik angka dari paling kecil sampai paling besar:";
+
+      const answer = document.createElement("div");
+      answer.className = "answer-row";
+      answer.style.minHeight = "72px";
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      [...sorted].sort(()=>Math.random()-.5).forEach(num=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#D0F4DE)";
+        btn.textContent = num;
+        btn.onclick = ()=>{
+          if(num === sorted[index]){
+            sound("good");
+            btn.disabled = true;
+            btn.style.opacity = ".35";
+            const slot = document.createElement("div");
+            slot.className = "slot";
+            slot.textContent = num;
+            answer.appendChild(slot);
+            index++;
+            message.textContent = "Benar, lanjut angka berikutnya!";
+
+            if(index >= sorted.length){
+              completeMission(35, "Jembatan angka berhasil dilewati!");
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            failMission("Cari angka yang paling kecil dulu.");
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(clue);
+      box.appendChild(answer);
+      box.appendChild(options);
+    }
+
+    // Misi 4: Cari yang beda
+    function missionOdd(mission){
+      const box = missionBase(mission);
+      const sets = [["🍎","🍅"],["🐱","🐶"],["⭐","🌟"],["🚗","🚕"],["🍌","🌽"]];
+      const pair = pickUnique("odd-pair", sets, p => p[0] + "-" + p[1]);
+      const total = 20;
+      const oddIndex = Math.floor(Math.random()*total);
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Cari satu gambar yang berbeda:";
+
+      const grid = document.createElement("div");
+      grid.style.display = "grid";
+      grid.style.gridTemplateColumns = "repeat(5, 1fr)";
+      grid.style.gap = "12px";
+      grid.style.maxWidth = "720px";
+      grid.style.margin = "20px auto";
+
+      for(let i=0;i<total;i++){
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.minHeight = "74px";
+        btn.style.fontSize = "36px";
+        btn.style.background = "linear-gradient(135deg,#fff,#FAD2E1)";
+        btn.textContent = i === oddIndex ? pair[1] : pair[0];
+        btn.onclick = ()=>{
+          if(i === oddIndex){
+            showBurst("correct","👀 KETEMU!","Kamu sangat teliti.");
+            completeMission(30, "Mata detektif berhasil menemukan yang beda!");
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            failMission("Itu masih sama. Cari yang berbeda.");
+          }
+        };
+        grid.appendChild(btn);
+      }
+
+      box.appendChild(clue);
+      box.appendChild(grid);
+    }
+
+    // Misi 5: Pilah sampah
+    function missionTrash(mission){
+      const box = missionBase(mission);
+      const items = [
+        {name:"Kulit Pisang", icon:"🍌", bin:"ORGANIK"},
+        {name:"Botol Plastik", icon:"🧴", bin:"PLASTIK"},
+        {name:"Koran", icon:"📰", bin:"KERTAS"},
+        {name:"Kaleng", icon:"🥫", bin:"LOGAM"}
+      ];
+      const bins = [
+        {name:"ORGANIK", icon:"🌱", color:"#6BCB77"},
+        {name:"PLASTIK", icon:"🧴", color:"#4D96FF"},
+        {name:"KERTAS", icon:"📄", color:"#FFD93D"},
+        {name:"LOGAM", icon:"🥫", color:"#B983FF"}
+      ];
+      const item = pickUnique("trash-item", items, i => i.name);
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = item.icon;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = `Masukkan "${item.name}" ke tempat sampah yang benar.`;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      bins.forEach(bin=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn color";
+        btn.style.background = bin.color;
+        btn.innerHTML = `<div style="font-size:42px">${bin.icon}</div><div>${bin.name}</div>`;
+        btn.onclick = ()=>{
+          if(bin.name === item.bin){
+            showBurst("correct","♻️ BAGUS!","Kamu menjaga lingkungan.");
+            completeMission(30, "Sampah berhasil dipilah dengan benar!");
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            failMission("Tempat sampahnya belum tepat.");
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(options);
+    }
+
+    // Misi 6: Susun kata
+    function missionWord(mission){
+      const box = missionBase(mission);
+      const words = [
+        {word:"APEL", icon:"🍎"},
+        {word:"BOLA", icon:"⚽"},
+        {word:"BUKU", icon:"📚"},
+        {word:"IKAN", icon:"🐟"},
+        {word:"RUMAH", icon:"🏠"}
+      ];
+      const target = pickUnique("mission-word-target", words, w => w.word);
+      let chosen = [];
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = target.icon;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = "Susun huruf menjadi nama gambar ini:";
+
+      const answerRow = document.createElement("div");
+      answerRow.className = "answer-row";
+
+      const letterRow = document.createElement("div");
+      letterRow.className = "letter-row";
+
+      function renderSlots(){
+        answerRow.innerHTML = "";
+        for(let i=0;i<target.word.length;i++){
+          const slot = document.createElement("div");
+          slot.className = "slot";
+          slot.textContent = chosen[i] || "";
+          answerRow.appendChild(slot);
+        }
+      }
+
+      let letters = target.word.split("").sort(()=>Math.random()-.5);
+      if(letters.join("") === target.word && letters.length > 1) letters.reverse();
+
+      letters.forEach(ch=>{
+        const btn = document.createElement("button");
+        btn.className = "letter";
+        btn.textContent = ch;
+        btn.onclick = ()=>{
+          chosen.push(ch);
+          btn.disabled = true;
+          btn.style.opacity = ".35";
+          renderSlots();
+
+          if(chosen.length === target.word.length){
+            if(chosen.join("") === target.word){
+              showBurst("correct","🔤 BENAR!","Kata rahasia terbuka.");
+              completeMission(35, "Kata rahasia berhasil disusun!");
+            }else{
+              box.classList.add("shake");
+              setTimeout(()=>box.classList.remove("shake"),250);
+              failMission("Susunan huruf belum tepat.");
+            }
+          }
+        };
+        letterRow.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(answerRow);
+      box.appendChild(letterRow);
+      renderSlots();
+    }
+
+    // Misi 7: Tebak profesi
+    function missionJob(mission){
+      const box = missionBase(mission);
+      const jobs = [
+        {name:"DOKTER", icon:"👩‍⚕️", clue:"Aku membantu orang sakit agar sehat kembali."},
+        {name:"GURU", icon:"👩‍🏫", clue:"Aku mengajar murid membaca dan berhitung."},
+        {name:"POLISI", icon:"👮", clue:"Aku menjaga keamanan dan lalu lintas."},
+        {name:"KOKI", icon:"👨‍🍳", clue:"Aku memasak makanan yang enak."}
+      ];
+      const target = pickUnique("job-target", jobs, j => j.name);
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = target.clue;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      jobs.sort(()=>Math.random()-.5).forEach(job=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#D0F4DE)";
+        btn.innerHTML = `<div style="font-size:42px">${job.icon}</div><div>${job.name}</div>`;
+        btn.onclick = ()=>{
+          if(job.name === target.name){
+            showBurst("correct","👩‍🏫 TEPAT!","Profesi berhasil ditebak.");
+            completeMission(30, `Jawabannya ${target.name}!`);
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            failMission("Profesi belum tepat.");
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(clue);
+      box.appendChild(options);
+    }
+
+    // Misi 8: Labirin mini
+    function missionMaze(mission){
+      gameContainer.innerHTML = "";
+      gameContainer.appendChild(missionBanner(mission));
+
+      const canvas = document.createElement("canvas");
+      canvas.width = 720;
+      canvas.height = 420;
+      gameContainer.appendChild(canvas);
+      const ctx = canvas.getContext("2d");
+
+      const rows = 7;
+      const cols = 12;
+      const cell = 52;
+      let player = {r:0,c:0};
+      const exit = {r:6,c:11};
+      let star = {r:3,c:7};
+      let gotStar = false;
+
+      const walls = new Set([
+        "1,1","1,2","1,4","1,5","1,8","1,9",
+        "2,5","2,9","3,1","3,2","3,3","3,9",
+        "4,6","4,7","4,8","5,2","5,3","5,4","5,8"
+      ]);
+
+      function mazeKey(r,c){return r + "," + c;}
+
+      function draw(){
+        ctx.clearRect(0,0,720,420);
+        ctx.fillStyle = "#DFF6FF";
+        ctx.fillRect(0,0,720,420);
+
+        for(let r=0;r<rows;r++){
+          for(let c=0;c<cols;c++){
+            const x = c*cell + 44;
+            const y = r*cell + 28;
+            ctx.fillStyle = "#fff";
+            ctx.beginPath();
+            ctx.roundRect(x,y,cell-7,cell-7,12);
+            ctx.fill();
+
+            if(walls.has(mazeKey(r,c))){
+              ctx.fillStyle = "#6B4F35";
+              ctx.beginPath();
+              ctx.roundRect(x,y,cell-7,cell-7,12);
+              ctx.fill();
+              ctx.font = "24px Comic Sans MS";
+              ctx.fillText("🧱", x+9, y+32);
+            }
+          }
+        }
+
+        ctx.font = "32px Comic Sans MS";
+        if(!gotStar) ctx.fillText("⭐", star.c*cell+54, star.r*cell+60);
+        ctx.fillText("🚪", exit.c*cell+54, exit.r*cell+60);
+        ctx.fillText("🦊", player.c*cell+54, player.r*cell+60);
+      }
+
+      function move(dr,dc){
+        const nr = player.r + dr;
+        const nc = player.c + dc;
+        if(nr<0 || nr>=rows || nc<0 || nc>=cols || walls.has(mazeKey(nr,nc))){
+          failMission("Aduh, menabrak tembok labirin!", "Yah menabrak tembok");
+          return;
+        }
+
+        player.r = nr;
+        player.c = nc;
+
+        if(player.r === star.r && player.c === star.c && !gotStar){
+          gotStar = true;
+          sound("good");
+          message.textContent = "Bintang labirin didapat! Sekarang cari pintu keluar.";
+        }
+
+        if(player.r === exit.r && player.c === exit.c){
+          if(gotStar){
+            completeMission(40, "Labirin berhasil diselesaikan!");
+          }else{
+            message.textContent = "Ambil bintang dulu sebelum keluar!";
+          }
+        }
+
+        draw();
+      }
+
+      document.onkeydown = e=>{
+        if(currentGame !== "mission") return;
+        if(e.key === "ArrowUp" || e.key === "w" || e.key === "W") move(-1,0);
+        if(e.key === "ArrowDown" || e.key === "s" || e.key === "S") move(1,0);
+        if(e.key === "ArrowLeft" || e.key === "a" || e.key === "A") move(0,-1);
+        if(e.key === "ArrowRight" || e.key === "d" || e.key === "D") move(0,1);
+      };
+
+      canvas.addEventListener("click", e=>{
+        const rect = canvas.getBoundingClientRect();
+        const x = ((e.clientX-rect.left)/rect.width)*canvas.width;
+        const y = ((e.clientY-rect.top)/rect.height)*canvas.height;
+        const pcx = player.c*cell + 69;
+        const pcy = player.r*cell + 52;
+        const dx = x - pcx;
+        const dy = y - pcy;
+        if(Math.abs(dx) > Math.abs(dy)) move(0, dx>0 ? 1 : -1);
+        else move(dy>0 ? 1 : -1, 0);
+      });
+
+      message.textContent = "Gunakan tombol panah/WASD atau klik arah di sekitar karakter.";
+      draw();
+    }
+
+    // Misi 9: Jawab suara
+    function missionVoice(mission){
+      const box = missionBase(mission);
+
+      const voiceQuestions = [
+        {q:"Ucapkan jawaban: benda untuk membaca cerita adalah?", answer:"buku", icon:"📚", accepted:["buku","book"]},
+        {q:"Ucapkan jawaban: buah berwarna merah ini adalah?", answer:"apel", icon:"🍎", accepted:["apel","apple"]},
+        {q:"Ucapkan jawaban: benda untuk menulis adalah?", answer:"pensil", icon:"✏️", accepted:["pensil","pena","pulpen"]},
+        {q:"Ucapkan jawaban: hewan yang hidup di air adalah?", answer:"ikan", icon:"🐟", accepted:["ikan","fish"]},
+        {q:"Ucapkan jawaban: kendaraan ini adalah?", answer:"mobil", icon:"🚗", accepted:["mobil","car"]}
+      ];
+
+      const question = pickUnique("mission-voice-question", voiceQuestions, q => q.q);
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = question.icon;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = question.q;
+
+      const panel = document.createElement("div");
+      panel.className = "voice-panel";
+
+      const mic = document.createElement("button");
+      mic.className = "mic-btn";
+      mic.textContent = "🎙️ Jawab dengan suara";
+
+      const speakBtn = document.createElement("button");
+      speakBtn.className = "btn yellow";
+      speakBtn.style.marginLeft = "8px";
+      speakBtn.textContent = "🔊 Bacakan soal";
+
+      const input = document.createElement("input");
+      input.className = "typing-input";
+      input.placeholder = "Atau ketik jawaban...";
+      input.type = "text";
+
+      const submit = document.createElement("button");
+      submit.className = "btn green";
+      submit.style.marginLeft = "8px";
+      submit.textContent = "✅ Cek";
+
+      const output = document.createElement("div");
+      output.className = "voice-output";
+      output.textContent = "Klik mikrofon dan ucapkan jawaban.";
+
+      function check(text){
+        const n = normalizeSpeech(text);
+        const ok = question.accepted.some(a => n.includes(normalizeSpeech(a)));
+        output.textContent = `Terdeteksi: "${text || "-"}"`;
+
+        if(ok){
+          showBurst("correct","🎙️ BENAR!","Jawaban suaramu cocok.");
+          completeMission(45, "Misi suara berhasil diselesaikan!");
+        }else{
+          failMission("Jawaban suara belum cocok.");
+        }
+      }
+
+      mic.onclick = ()=>{
+        const rec = getSpeechRecognizer();
+        if(!rec){
+          output.textContent = "Browser belum mendukung deteksi suara. Pakai input ketik ya.";
+          showBurst("wrong","🎙️ Mic belum support","Gunakan input ketik sebagai pengganti.");
+          return;
+        }
+
+        mic.classList.add("listening");
+        mic.textContent = "🎧 Mendengarkan...";
+        output.textContent = "Mendengarkan jawabanmu...";
+
+        rec.onresult = e=>{
+          const text = e.results[0][0].transcript;
+          mic.classList.remove("listening");
+          mic.textContent = "🎙️ Jawab dengan suara";
+          check(text);
+        };
+
+        rec.onerror = ()=>{
+          mic.classList.remove("listening");
+          mic.textContent = "🎙️ Jawab dengan suara";
+          output.textContent = "Suara belum jelas. Coba lagi atau ketik jawaban.";
+        };
+
+        rec.onend = ()=>{
+          mic.classList.remove("listening");
+          mic.textContent = "🎙️ Jawab dengan suara";
+        };
+
+        rec.start();
+      };
+
+      speakBtn.onclick = ()=>speakText(question.q);
+      submit.onclick = ()=>{ if(input.value.trim()) check(input.value.trim()); };
+      input.onkeydown = e=>{ if(e.key === "Enter" && input.value.trim()) check(input.value.trim()); };
+
+      panel.appendChild(mic);
+      panel.appendChild(speakBtn);
+      panel.appendChild(document.createElement("br"));
+      panel.appendChild(input);
+      panel.appendChild(submit);
+      panel.appendChild(output);
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(panel);
+
+      speakText(question.q);
+    }
+
+    // Misi 10: Roket final
+    function missionRocket(mission){
+      gameContainer.innerHTML = "";
+      gameContainer.appendChild(missionBanner(mission));
+
+      const canvas = document.createElement("canvas");
+      canvas.width = 900;
+      canvas.height = 460;
+      gameContainer.appendChild(canvas);
+      const ctx = canvas.getContext("2d");
+
+      let rocket = {x:450,y:370};
+      let stars = [];
+      let meteors = [];
+      let frame = 0;
+      let finalCollected = 0;
+      const finalTarget = 5;
+      let keys = {};
+
+      document.onkeydown = e => keys[e.key] = true;
+      document.onkeyup = e => keys[e.key] = false;
+
+      canvas.addEventListener("mousemove", e=>{
+        const r = canvas.getBoundingClientRect();
+        rocket.x = ((e.clientX-r.left)/r.width)*canvas.width;
+      });
+
+      function spawnStar(){
+        stars.push({x:40+Math.random()*820,y:-30,speed:3.5+Math.random()*2});
+      }
+
+      function spawnMeteor(){
+        meteors.push({x:40+Math.random()*820,y:-40,speed:4+Math.random()*2.5});
+      }
+
+      function draw(){
+        ctx.clearRect(0,0,900,460);
+        const grd = ctx.createLinearGradient(0,0,0,460);
+        grd.addColorStop(0,"#1B2A6B");
+        grd.addColorStop(1,"#FFB3C7");
+        ctx.fillStyle = grd;
+        ctx.fillRect(0,0,900,460);
+
+        ctx.font = "62px Comic Sans MS";
+        ctx.fillText("🚀", rocket.x-32, rocket.y+50);
+
+        ctx.font = "34px Comic Sans MS";
+        stars.forEach(s=>ctx.fillText("⭐",s.x-16,s.y+14));
+
+        ctx.font = "46px Comic Sans MS";
+        meteors.forEach(m=>ctx.fillText("☄️",m.x-22,m.y+18));
+
+        ctx.fillStyle = "#fff";
+        ctx.font = "22px Comic Sans MS";
+        ctx.fillText(`Bintang final: ${finalCollected}/${finalTarget}`, 24, 34);
+      }
+
+      function loop(){
+        if(!state.running || currentGame !== "mission") return;
+
+        frame++;
+        if(keys.ArrowLeft || keys.a || keys.A) rocket.x -= 9;
+        if(keys.ArrowRight || keys.d || keys.D) rocket.x += 9;
+        rocket.x = Math.max(35, Math.min(865, rocket.x));
+
+        if(frame % 42 === 0) spawnStar();
+        if(frame % 34 === 0) spawnMeteor();
+
+        for(let i=stars.length-1;i>=0;i--){
+          const s = stars[i];
+          s.y += s.speed;
+
+          if(Math.hypot(s.x-rocket.x, s.y-(rocket.y+22)) < 46){
+            stars.splice(i,1);
+            finalCollected++;
+            sound("good");
+            message.textContent = "Bintang final didapat!";
+            if(finalCollected >= finalTarget){
+              completeMission(60, "Roket final berhasil!");
+              return;
+            }
+          }else if(s.y > 490){
+            stars.splice(i,1);
+          }
+        }
+
+        for(let i=meteors.length-1;i>=0;i--){
+          const m = meteors[i];
+          m.y += m.speed;
+          if(Math.hypot(m.x-rocket.x, m.y-(rocket.y+20)) < 48){
+            meteors.splice(i,1);
+            if(failMission("Roket terkena meteor final!", "Yah terkena meteor")) return;
+            return;
+          }else if(m.y > 500){
+            meteors.splice(i,1);
+          }
+        }
+
+        draw();
+        loopId = requestAnimationFrame(loop);
+      }
+
+      message.textContent = "Gerakkan roket dengan mouse atau panah. Ambil 5 bintang!";
+      draw();
+      loop();
+    }
+
+
+
+    /* =======================
+       GAME 25: BELANJA PINTAR
+    ======================== */
+    function startMoneyGame(){
+      setTitle("🛒 Belanja Pintar", "Hitung total harga barang, lalu pilih jumlah uang yang benar.");
+      state = {level:1, score:0, lives:3, collected:0, target:5, running:true};
+      makeMoneyRound();
+    }
+
+    function makeMoneyRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const items = [
+        {name:"Apel", icon:"🍎", price:2},
+        {name:"Roti", icon:"🍞", price:3},
+        {name:"Susu", icon:"🥛", price:4},
+        {name:"Pisang", icon:"🍌", price:2},
+        {name:"Buku", icon:"📚", price:5},
+        {name:"Pensil", icon:"✏️", price:1},
+        {name:"Bola", icon:"⚽", price:6},
+        {name:"Kue", icon:"🍪", price:3},
+        {name:"Air", icon:"💧", price:2},
+        {name:"Jus", icon:"🧃", price:4}
+      ];
+
+      const itemCount = Math.min(3, state.level);
+      const question = makeUniqueGenerated(
+        "money-question",
+        () => {
+          const chosen = [...items].sort(()=>Math.random()-.5).slice(0, itemCount);
+          const total = chosen.reduce((sum, item) => sum + item.price, 0);
+          return {chosen, total};
+        },
+        q => q.chosen.map(item => item.name).join("+")
+      );
+
+      const title = document.createElement("div");
+      title.className = "small-clue";
+      title.innerHTML = `Hitung total belanja ini, ${getPlayerName()}!`;
+
+      const itemBox = document.createElement("div");
+      itemBox.style.display = "flex";
+      itemBox.style.flexWrap = "wrap";
+      itemBox.style.justifyContent = "center";
+      itemBox.style.gap = "14px";
+      itemBox.style.margin = "18px auto";
+      itemBox.style.maxWidth = "760px";
+
+      question.chosen.forEach(item=>{
+        const card = document.createElement("div");
+        card.style.background = "#fff";
+        card.style.borderRadius = "24px";
+        card.style.padding = "16px";
+        card.style.minWidth = "140px";
+        card.style.boxShadow = "0 10px 18px rgba(31,45,54,.1)";
+        card.innerHTML = `
+          <div style="font-size:52px">${item.icon}</div>
+          <div style="font-weight:1000;font-size:19px">${item.name}</div>
+          <div style="font-weight:1000;color:#FF4D6D">Rp${item.price}</div>
+        `;
+        itemBox.appendChild(card);
+      });
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      const answers = new Set([question.total]);
+      while(answers.size < 4){
+        const fake = question.total + Math.floor(Math.random()*9) - 4;
+        if(fake > 0) answers.add(fake);
+      }
+
+      [...answers].sort(()=>Math.random()-.5).forEach(num=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#D0F4DE)";
+        btn.textContent = "Rp" + num;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(num === question.total){
+            sound("good");
+            showBurst("correct", "🛒 BENAR!", "Kamu pintar menghitung belanja.");
+            addScore(14 + state.level);
+            state.collected++;
+            message.textContent = "Total belanja benar!";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeMoneyRound);
+            }else{
+              setTimeout(makeMoneyRound,850);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Total belanjanya belum tepat.")) setTimeout(makeMoneyRound,900);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(title);
+      box.appendChild(itemBox);
+      box.appendChild(options);
+
+      speakText("Hitung total belanja ini, " + getPlayerName());
+      updateHud();
+    }
+
+    /* =======================
+       GAME 26: LANJUTKAN POLA
+    ======================== */
+    function startPatternGame(){
+      setTitle("🧩 Lanjutkan Pola", "Perhatikan urutan gambar, lalu pilih gambar yang seharusnya muncul berikutnya.");
+      state = {level:1, score:0, lives:3, collected:0, target:6, running:true, instructionSpoken:false};
+      makePatternRound();
+    }
+
+    function makePatternRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const patterns = [
+        {seq:["🔴","🔵"], id:"merah-biru"},
+        {seq:["⭐","🌙"], id:"bintang-bulan"},
+        {seq:["🍎","🍌"], id:"apel-pisang"},
+        {seq:["🐱","🐶"], id:"kucing-anjing"},
+        {seq:["🟦","🟩","🟨"], id:"kotak-warna"},
+        {seq:["🌸","🍃","🌸"], id:"bunga-daun"},
+        {seq:["1","2","3"], id:"angka-naik"},
+        {seq:["A","B","C"], id:"huruf-naik"},
+        {seq:["😀","😎"], id:"wajah"},
+        {seq:["🚗","🚕","🚙"], id:"mobil"}
+      ];
+
+      const data = pickUnique("pattern-question", patterns, p => p.id + "-L" + state.level);
+      const seq = data.seq;
+      const repeat = state.level === 1 ? 3 : state.level === 2 ? 4 : 5;
+      const full = [];
+
+      for(let i=0; i<repeat; i++){
+        full.push(seq[i % seq.length]);
+      }
+
+      const answer = seq[repeat % seq.length];
+      const visible = full.concat(["❓"]);
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.textContent = `Lanjutkan pola ini, ${getPlayerName()}!`;
+
+      const patternBox = document.createElement("div");
+      patternBox.style.display = "flex";
+      patternBox.style.flexWrap = "wrap";
+      patternBox.style.justifyContent = "center";
+      patternBox.style.gap = "12px";
+      patternBox.style.margin = "22px auto";
+      patternBox.style.maxWidth = "820px";
+
+      visible.forEach(symbol=>{
+        const slot = document.createElement("div");
+        slot.className = "slot";
+        slot.style.minWidth = "76px";
+        slot.style.height = "76px";
+        slot.style.fontSize = "36px";
+        slot.textContent = symbol;
+        patternBox.appendChild(slot);
+      });
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      const allSymbols = ["🔴","🔵","🟢","🟡","⭐","🌙","🍎","🍌","🐱","🐶","🟦","🟩","🟨","🌸","🍃","1","2","3","4","A","B","C","D","😀","😎","🚗","🚕","🚙"];
+      const choices = new Set([answer]);
+      while(choices.size < 4){
+        choices.add(allSymbols[Math.floor(Math.random()*allSymbols.length)]);
+      }
+
+      [...choices].sort(()=>Math.random()-.5).forEach(symbol=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#E4C1F9)";
+        btn.style.fontSize = "36px";
+        btn.textContent = symbol;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(symbol === answer){
+            sound("good");
+            showBurst("correct", "🧩 BENAR!", "Pola berhasil dilanjutkan.");
+            addScore(13 + state.level);
+            state.collected++;
+            message.textContent = "Pola benar!";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makePatternRound);
+            }else{
+              setTimeout(makePatternRound,800);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Pola belum tepat.")) setTimeout(makePatternRound,900);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(clue);
+      box.appendChild(patternBox);
+      box.appendChild(options);
+
+      if(!state.instructionSpoken){
+        speakText("Lanjutkan pola ini, " + getPlayerName());
+        state.instructionSpoken = true;
+      }
+
+      updateHud();
+    }
+
+    /* =======================
+       GAME 27: KELOMPOKKAN BENDA
+    ======================== */
+    function startCategoryGame(){
+      setTitle("🧺 Kelompokkan Benda", "Pilih kategori yang tepat untuk benda yang muncul.");
+      state = {level:1, score:0, lives:3, collected:0, target:7, running:true, instructionSpoken:false};
+      makeCategoryRound();
+    }
+
+    function makeCategoryRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const categories = [
+        {name:"BUAH", icon:"🍎"},
+        {name:"HEWAN", icon:"🐱"},
+        {name:"KENDARAAN", icon:"🚗"},
+        {name:"ALAT SEKOLAH", icon:"✏️"},
+        {name:"MAKANAN", icon:"🍞"},
+        {name:"BAGIAN TUBUH", icon:"👀"}
+      ];
+
+      const items = [
+        {name:"Apel", icon:"🍎", cat:"BUAH"},
+        {name:"Pisang", icon:"🍌", cat:"BUAH"},
+        {name:"Anggur", icon:"🍇", cat:"BUAH"},
+        {name:"Kucing", icon:"🐱", cat:"HEWAN"},
+        {name:"Ikan", icon:"🐟", cat:"HEWAN"},
+        {name:"Burung", icon:"🐦", cat:"HEWAN"},
+        {name:"Mobil", icon:"🚗", cat:"KENDARAAN"},
+        {name:"Sepeda", icon:"🚲", cat:"KENDARAAN"},
+        {name:"Pesawat", icon:"✈️", cat:"KENDARAAN"},
+        {name:"Pensil", icon:"✏️", cat:"ALAT SEKOLAH"},
+        {name:"Buku", icon:"📚", cat:"ALAT SEKOLAH"},
+        {name:"Tas", icon:"🎒", cat:"ALAT SEKOLAH"},
+        {name:"Roti", icon:"🍞", cat:"MAKANAN"},
+        {name:"Kue", icon:"🍪", cat:"MAKANAN"},
+        {name:"Nasi", icon:"🍚", cat:"MAKANAN"},
+        {name:"Mata", icon:"👀", cat:"BAGIAN TUBUH"},
+        {name:"Telinga", icon:"👂", cat:"BAGIAN TUBUH"},
+        {name:"Tangan", icon:"✋", cat:"BAGIAN TUBUH"}
+      ];
+
+      const item = pickUnique("category-item", items, i => i.name);
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = item.icon;
+
+      const clue = document.createElement("div");
+      clue.className = "small-clue";
+      clue.innerHTML = `${item.name} termasuk kelompok apa?`;
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      let choices = categories.slice();
+      if(state.level === 1){
+        choices = categories.filter(c => c.name === item.cat || ["BUAH","HEWAN","KENDARAAN"].includes(c.name)).slice(0,4);
+        if(!choices.some(c=>c.name === item.cat)) choices[0] = categories.find(c=>c.name === item.cat);
+      }
+
+      choices.sort(()=>Math.random()-.5).forEach(cat=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#BDE0FE)";
+        btn.innerHTML = `<div style="font-size:42px">${cat.icon}</div><div>${cat.name}</div>`;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(cat.name === item.cat){
+            sound("good");
+            showBurst("correct", "🧺 BENAR!", "Benda berhasil dikelompokkan.");
+            addScore(12);
+            state.collected++;
+            message.textContent = "Kategori benar!";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeCategoryRound);
+            }else{
+              setTimeout(makeCategoryRound,850);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Kategori belum tepat.")) setTimeout(makeCategoryRound,900);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(clue);
+      box.appendChild(options);
+
+      if(!state.instructionSpoken){
+        speakText("Kelompokkan benda ini, " + getPlayerName());
+        state.instructionSpoken = true;
+      }
+
+      updateHud();
+    }
+
+    /* =======================
+       GAME 28: CERITA MINI
+    ======================== */
+    function startStoryGame(){
+      setTitle("📚 Cerita Mini", "Baca cerita pendek, lalu jawab pertanyaan pemahaman.");
+      state = {level:1, score:0, lives:3, collected:0, target:5, running:true};
+      makeStoryRound();
+    }
+
+    function makeStoryRound(){
+      gameContainer.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "center-game";
+      gameContainer.appendChild(box);
+
+      const stories = [
+        {
+          id:"rani-apel",
+          icon:"🍎",
+          story:"Rani membawa apel merah ke sekolah. Saat istirahat, Rani membagi apel itu dengan Budi.",
+          q:"Apa yang dibawa Rani ke sekolah?",
+          a:"APEL",
+          options:["APEL","BOLA","BUKU","SEPATU"]
+        },
+        {
+          id:"budi-kucing",
+          icon:"🐱",
+          story:"Budi punya kucing bernama Mimi. Mimi suka tidur di dekat jendela saat siang hari.",
+          q:"Hewan apa yang dimiliki Budi?",
+          a:"KUCING",
+          options:["KUCING","IKAN","BURUNG","SAPI"]
+        },
+        {
+          id:"siti-hujan",
+          icon:"☔",
+          story:"Siti melihat langit gelap. Ia membawa payung sebelum pergi ke rumah nenek.",
+          q:"Mengapa Siti membawa payung?",
+          a:"KARENA MAU HUJAN",
+          options:["KARENA MAU HUJAN","KARENA PANAS","KARENA LAPAR","KARENA TIDUR"]
+        },
+        {
+          id:"dino-bola",
+          icon:"⚽",
+          story:"Dino bermain bola di halaman. Setelah bermain, Dino merapikan bola ke dalam keranjang.",
+          q:"Di mana Dino bermain bola?",
+          a:"HALAMAN",
+          options:["HALAMAN","KAMAR","DAPUR","KELAS"]
+        },
+        {
+          id:"lina-buku",
+          icon:"📚",
+          story:"Lina membaca buku cerita sebelum tidur. Buku itu bercerita tentang kelinci yang baik hati.",
+          q:"Apa yang dibaca Lina?",
+          a:"BUKU CERITA",
+          options:["BUKU CERITA","KORAN","SURAT","PETA"]
+        },
+        {
+          id:"andi-sepeda",
+          icon:"🚲",
+          story:"Andi naik sepeda ke taman. Di taman, Andi melihat banyak bunga warna-warni.",
+          q:"Andi pergi ke taman naik apa?",
+          a:"SEPEDA",
+          options:["SEPEDA","MOBIL","PESAWAT","PERAHU"]
+        },
+        {
+          id:"maya-susu",
+          icon:"🥛",
+          story:"Maya minum susu hangat setiap pagi. Ibu berkata susu baik untuk tubuh.",
+          q:"Apa yang diminum Maya setiap pagi?",
+          a:"SUSU",
+          options:["SUSU","JUS","TEH","AIR HUJAN"]
+        },
+        {
+          id:"eko-ikan",
+          icon:"🐟",
+          story:"Eko memberi makan ikan di kolam. Ikan-ikan itu berenang cepat mendekati makanan.",
+          q:"Di mana ikan Eko berada?",
+          a:"KOLAM",
+          options:["KOLAM","POHON","KAMAR","LANGIT"]
+        }
+      ];
+
+      const story = pickUnique("story-question", stories, s => s.id);
+
+      const icon = document.createElement("div");
+      icon.className = "big-question";
+      icon.textContent = story.icon;
+
+      const storyBox = document.createElement("div");
+      storyBox.style.maxWidth = "820px";
+      storyBox.style.margin = "0 auto 18px";
+      storyBox.style.padding = "20px";
+      storyBox.style.borderRadius = "28px";
+      storyBox.style.background = "#fff";
+      storyBox.style.boxShadow = "inset 0 0 0 4px rgba(36,52,71,.06)";
+      storyBox.style.fontSize = "22px";
+      storyBox.style.fontWeight = "900";
+      storyBox.style.lineHeight = "1.45";
+      storyBox.textContent = story.story;
+
+      const question = document.createElement("div");
+      question.className = "small-clue";
+      question.textContent = story.q;
+
+      const listenBtn = document.createElement("button");
+      listenBtn.className = "btn yellow";
+      listenBtn.style.margin = "0 auto 18px";
+      listenBtn.style.display = "inline-block";
+      listenBtn.textContent = "🔊 Dengarkan Cerita";
+      listenBtn.onclick = ()=>{
+        speakText("Dengarkan ceritanya, " + getPlayerName() + ". " + story.story + " Pertanyaannya, " + story.q);
+      };
+
+      const options = document.createElement("div");
+      options.className = "option-grid";
+
+      story.options.sort(()=>Math.random()-.5).forEach(ans=>{
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+        btn.style.background = "linear-gradient(135deg,#fff,#FFF1A8)";
+        btn.textContent = ans;
+        btn.onclick = ()=>{
+          if(!state.running) return;
+
+          if(ans === story.a){
+            sound("good");
+            showBurst("correct", "📚 BENAR!", "Kamu memahami ceritanya.");
+            addScore(14 + state.level);
+            state.collected++;
+            message.textContent = "Jawaban cerita benar!";
+            updateHud();
+
+            if(state.collected >= state.target){
+              winLevel(makeStoryRound);
+            }else{
+              setTimeout(makeStoryRound,900);
+            }
+          }else{
+            box.classList.add("shake");
+            setTimeout(()=>box.classList.remove("shake"),250);
+            if(!loseLife("Jawaban cerita belum tepat.")) setTimeout(makeStoryRound,950);
+          }
+        };
+        options.appendChild(btn);
+      });
+
+      box.appendChild(icon);
+      box.appendChild(storyBox);
+      box.appendChild(question);
+      box.appendChild(listenBtn);
+      box.appendChild(options);
+
+      speakText("Dengarkan ceritanya, " + getPlayerName() + ". " + story.story + " Pertanyaannya, " + story.q);
+      updateHud();
+    }
+
+
+    if(!CanvasRenderingContext2D.prototype.roundRect){
+      CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
+        if(w < 2*r) r = w/2;
+        if(h < 2*r) r = h/2;
+        this.beginPath();
+        this.moveTo(x+r,y);
+        this.arcTo(x+w,y,x+w,y+h,r);
+        this.arcTo(x+w,y+h,x,y+h,r);
+        this.arcTo(x,y+h,x,y,r);
+        this.arcTo(x,y,x+w,y,r);
+        this.closePath();
+        return this;
+      }
+    }
+  </script>
+</body>
+</html>
